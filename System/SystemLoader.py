@@ -1,7 +1,7 @@
 import os
 import sys
-sys.path.insert(0, os.getcwd())
-# sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+sys.path.insert(0, os.getcwd() )
+# {value for value in variable}ys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 #
 from ObjectInfo import AdministratorClass
 from ObjectInfo import DatabaseClass

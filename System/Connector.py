@@ -21,7 +21,12 @@ class Connector(object) :
     #     return psycopg2.fetch
 
     def Connecting(self) :
+        # First, you have to connect DataBase in your local computer.
+        # PostgreSQL will be the best choice. But if you want to use other version,
+        # please check program version.
         self.Connect_DB()
+
+        # Second, program will get server data from your local database.
 
 
 
