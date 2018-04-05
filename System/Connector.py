@@ -9,6 +9,7 @@ class Connector(object) :
     def __init__(self, objects):
         # you must input 'SystemLoader in here'
         self.SystemLoader = objects
+        # o ye
         self.db = self.SystemLoader.DB
         self.admin = self.SystemLoader.Admin
 
