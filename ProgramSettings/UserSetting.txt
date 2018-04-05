@@ -1,0 +1,4 @@
+ID=root
+PW=root
+MODE=Admin
+NAME=Wonseok
