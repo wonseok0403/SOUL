@@ -10,8 +10,9 @@ class Server(object) :
         self.OWNER_ID = ""
         self.SERVER_OS = ""
         self.SERVER_NAME = ""
+        self.IS_ERROR = ""
 
-    def __init__(slef, i, p, s, ip, pa, u, n, id, os, Na) :
+    def __init__(slef, i, p, s, ip, pa, u, n, id, os, Na, IE) :
         self.ID = i
         self.CONNECTION_PORT = p
         self.CONNECTION_SORT = s
@@ -22,3 +23,4 @@ class Server(object) :
         self.OWNER_ID = id
         self.SERVER_OS = os
         self.SERVER_NAME = Na
+        self.IS_ERROR = IE

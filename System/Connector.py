@@ -4,6 +4,7 @@ import pandas.io.sql as pdsql
 import pandas
 import sqlalchemy
 from pexpect import pxssh
+import time, datetime
 # from fabric.api import run, roles, env, execute
 
 
@@ -64,14 +65,25 @@ class Connector(object) :
                 print( "before:\n"+ s.before )
 
                 s.logout()
+                cursor = self.conn.cursor()
+                cursor.execute("UPDATE servers SET \"LAST_LOGIN\"=\'"+str(datetime.datetime.now())+"\' WHERE \"ID\"="+str(i[0]))
+                cursor.execute("UPDATE servers SET \"IS_ERROR\"=\'"+str("")+"\' WHERE \"ID\"="+str(i[0]))
+                self.conn.commit()
+                cursor.close()
+
             except pxssh.ExceptionPxssh, e :
+                cursor = self.conn.cursor()
+                cursor.execute("UPDATE servers SET \"LAST_LOGIN\"=\'"+str(datetime.datetime.now())+"\' WHERE \"ID\"="+str(i[0]))
+                cursor.execute("UPDATE servers SET \"IS_ERROR\"=\'"+str("YES")+"\' WHERE \"ID\"="+str(i[0]))
+                self.conn.commit()
+                cursor.close()
                 print( "pxssh failed on login.")
                 print( str(e) )
 
     def Connect_getServerDB(self) :
         print("Log, (Connect_getServerDB), conn_string : ", self.conn_string)
-        conn = psycopg2.connect(self.conn_string)
-        the_frame = pdsql.read_sql_table("SERVERS", self.engine)
+        self.conn = psycopg2.connect(self.conn_string)
+        the_frame = pdsql.read_sql_table("servers", self.engine)
         print( the_frame.values.tolist() )
         self.ServerList = the_frame.values.tolist()
         print("Log, ServerList : ", self.ServerList)
@@ -84,7 +96,7 @@ class Connector(object) :
             print( self.conn_string )
             # dialect+driver://username:password@host:port/database
             self.engine = sqlalchemy.create_engine("postgresql+psycopg2://" + self.db.USER.replace("'","") + ":" + self.db.PW.replace("'","")+"@" + self.db.HOST.replace("'","") + ":" + self.db.PORT.replace("'","")+ "/" + self.db.NAME.replace("'",""))
-            conn = psycopg2.connect(self.conn_string)
+            self.conn = psycopg2.connect(self.conn_string)
 
 
 
