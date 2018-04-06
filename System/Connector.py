@@ -7,6 +7,25 @@ from pexpect import pxssh
 import time, datetime
 # from fabric.api import run, roles, env, execute
 
+def Shell_login(Shell, Hostname, Username, Password):
+    Shell.login( Hostname, Username, Password)
+    Shell.sendline('ls -al')
+    Shell.prompt()
+    print ("before\n"+ Shell.before)
+
+def Update_Success(cursor,conn,Id, isSuccess) :
+    if isSuccess == True :
+        cursor.execute("UPDATE servers SET \"LAST_LOGIN\"=\'"+str(datetime.datetime.now())+"\' WHERE \"ID\"="+str(Id))
+        cursor.execute("UPDATE servers SET \"IS_ERROR\"=\'"+str("")+"\' WHERE \"ID\"="+str(Id))
+        conn.commit()
+
+    else :
+        cursor.execute("UPDATE servers SET \"LAST_LOGIN\"=\'"+str(datetime.datetime.now())+"\' WHERE \"ID\"="+str(Id))
+        cursor.execute("UPDATE servers SET \"IS_ERROR\"=\'"+str("YES")+"\' WHERE \"ID\"="+str(Id))
+        conn.commit()
+
+    conn.commit()
+    cursor.close()
 
 class Connector(object) :
     def __init__(self) :
@@ -23,10 +42,6 @@ class Connector(object) :
 
         self.Connecting()
 
-
-    # def executeQuery(qurey) :
-    #     psycopg2.executeQuery(query)
-    #     return psycopg2.fetch
 
     def Connecting(self) :
         # First, you have to connect DataBase in your local computer.
@@ -51,34 +66,31 @@ class Connector(object) :
             str_tmp = str(i[5])+"@"+str(i[3])+":"+str(i[1])
 
             try :
+                # shell and host setting
                 s = pxssh.pxssh()
                 hostname = str(i[3])
                 username = str(i[5])
                 password = str(i[4])
-                s.login( hostname, username, password)
-                s.sendline('ls -al')
-                s.prompt()
-                print ("before\n"+ s.before)
 
-                s.sendline('whoami')
-                s.prompt()
-                print( "before:\n"+ s.before )
+                # Login to shell, if it has error, it may goes under 'except' lines.
+                Shell_login(s, hostname, username, password)
+
+                # If you want check what if server respond in pxssh, execute under lines.
+                #######  s.sendline('whoami')
+                #######  s.prompt()
+                #######  print( "before:\n"+ s.before )
 
                 s.logout()
+
                 cursor = self.conn.cursor()
-                cursor.execute("UPDATE servers SET \"LAST_LOGIN\"=\'"+str(datetime.datetime.now())+"\' WHERE \"ID\"="+str(i[0]))
-                cursor.execute("UPDATE servers SET \"IS_ERROR\"=\'"+str("")+"\' WHERE \"ID\"="+str(i[0]))
-                self.conn.commit()
-                cursor.close()
+                Update_Success(cursor, self.conn,i[0], True)
 
             except pxssh.ExceptionPxssh, e :
                 cursor = self.conn.cursor()
-                cursor.execute("UPDATE servers SET \"LAST_LOGIN\"=\'"+str(datetime.datetime.now())+"\' WHERE \"ID\"="+str(i[0]))
-                cursor.execute("UPDATE servers SET \"IS_ERROR\"=\'"+str("YES")+"\' WHERE \"ID\"="+str(i[0]))
-                self.conn.commit()
-                cursor.close()
+                Update_Success(cursor, self.conn,i[0],  False)
                 print( "pxssh failed on login.")
                 print( str(e) )
+
 
     def Connect_getServerDB(self) :
         print("Log, (Connect_getServerDB), conn_string : ", self.conn_string)
@@ -97,7 +109,6 @@ class Connector(object) :
             # dialect+driver://username:password@host:port/database
             self.engine = sqlalchemy.create_engine("postgresql+psycopg2://" + self.db.USER.replace("'","") + ":" + self.db.PW.replace("'","")+"@" + self.db.HOST.replace("'","") + ":" + self.db.PORT.replace("'","")+ "/" + self.db.NAME.replace("'",""))
             self.conn = psycopg2.connect(self.conn_string)
-
 
 
         else :
