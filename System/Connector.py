@@ -3,6 +3,8 @@ import psycopg2
 import pandas.io.sql as pdsql
 import pandas
 import sqlalchemy
+from pexpect import pxssh
+# from fabric.api import run, roles, env, execute
 
 
 class Connector(object) :
@@ -30,9 +32,41 @@ class Connector(object) :
         # PostgreSQL will be the best choice. But if you want to use other version,
         # please check program version.
         self.Connect_DB()
-        self.Connect_getServerDB()
 
         # Second, program will get server data from your local database.
+        self.Connect_getServerDB()
+
+        # Third, program check the servers okay to connectt
+        self.Connect_Servers()
+
+    def Connect_Servers(self) :
+        # In this function, program check servers which owner has in local DB.
+        # If there are errors in this logic, program will send log in DB.
+        # You can check your error log in this program, and in other module.
+
+        # i is each server list of serverlists
+        for i in self.ServerList :
+            # The rule of env.host = 'user@host:port'
+            str_tmp = str(i[5])+"@"+str(i[3])+":"+str(i[1])
+
+            try :
+                s = pxssh.pxssh()
+                hostname = str(i[3])
+                username = str(i[5])
+                password = str(i[4])
+                s.login( hostname, username, password)
+                s.sendline('ls -al')
+                s.prompt()
+                print ("before\n"+ s.before)
+
+                s.sendline('whoami')
+                s.prompt()
+                print( "before:\n"+ s.before )
+
+                s.logout()
+            except pxssh.ExceptionPxssh, e :
+                print( "pxssh failed on login.")
+                print( str(e) )
 
     def Connect_getServerDB(self) :
         print("Log, (Connect_getServerDB), conn_string : ", self.conn_string)
@@ -40,7 +74,7 @@ class Connector(object) :
         the_frame = pdsql.read_sql_table("SERVERS", self.engine)
         print( the_frame.values.tolist() )
         self.ServerList = the_frame.values.tolist()
-        print(self.ServerList)
+        print("Log, ServerList : ", self.ServerList)
 
 
     def Connect_DB(self):

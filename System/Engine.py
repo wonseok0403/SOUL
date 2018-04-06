@@ -3,6 +3,7 @@ from Kernel import Kernel
 import os, sys
 sys.path.insert(0, os.getcwd())
 from ObjectInfo import AdministratorClass
+import fabric
 
 
 if __name__ == "__main__" :
