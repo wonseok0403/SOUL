@@ -1,4 +1,5 @@
 from SystemLoader import SystemLoader
+from Logger import Logger
 import psycopg2
 import pandas.io.sql as pdsql
 import pandas
@@ -39,6 +40,7 @@ class Connector(object) :
         self.admin = self.SystemLoader.Admin
         self.ServerList = [[]]
         self.conn_string = ""
+        self.logger = Logger(self)
 
         self.Connecting()
 
@@ -113,3 +115,6 @@ class Connector(object) :
 
         else :
             print ( "Sorry, " + db.SORTS + " isn't supported yet.....")
+
+    def __str__(self) :
+        return "Connector"

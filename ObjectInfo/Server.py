@@ -24,3 +24,6 @@ class Server(object) :
         self.SERVER_OS = os
         self.SERVER_NAME = Na
         self.IS_ERROR = IE
+
+    def __str__ :
+        return "Server"

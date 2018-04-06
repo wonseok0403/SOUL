@@ -26,6 +26,4 @@ class DB(object) :
         print('')
 
     def __str__(self) :
-        # if you need system's db info, you can get information by
-        # parsing below string.
-        return(self.SORTS+ ':' + self.HOST + ':' + self.PORT+ ':' + self.NAME+ ':' + self.PW + ':' + self.USER)
+        return "DatabaseClass"

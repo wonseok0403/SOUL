@@ -79,3 +79,6 @@ class SystemLoader(object) :
     def printInfo(self) :
         self.Admin.printInfo()
         self.DB.printInfo()
+
+    def __str__(self) :
+        return "SystemLoader"

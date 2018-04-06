@@ -1,5 +1,6 @@
 from SystemLoader import SystemLoader
 from Kernel import Kernel
+from Logger import Logger
 import os, sys
 sys.path.insert(0, os.getcwd())
 from ObjectInfo import AdministratorClass

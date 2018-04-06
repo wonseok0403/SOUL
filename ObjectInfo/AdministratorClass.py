@@ -17,6 +17,4 @@ class Administrator(object) :
         print('')
 
     def __str__(self) :
-        # if you need system's db info, you can get information by
-        # parsing below string.
-        return( self.NAME+ ':' + self.PW + ':' + self.ID + ':' + self.MODE )
+        return "AdministratorClass"

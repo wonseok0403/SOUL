@@ -14,3 +14,6 @@ class Kernel(object) :
         self.SystemLoader = object
         self.SystemLoader.printInfo()
         self.Conn = Connector(self.SystemLoader)
+
+    def __str__ (self):
+        return "Kernel"
