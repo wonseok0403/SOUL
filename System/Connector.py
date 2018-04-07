@@ -19,6 +19,8 @@ def Update_Success(cursor,conn,Id, isSuccess) :
         cursor.execute("UPDATE servers SET \"LAST_LOGIN\"=\'"+str(datetime.datetime.now())+"\' WHERE \"ID\"="+str(Id))
         cursor.execute("UPDATE servers SET \"IS_ERROR\"=\'"+str("")+"\' WHERE \"ID\"="+str(Id))
         conn.commit()
+        # Push Log in here
+        # self.logger.push_log()
 
     else :
         cursor.execute("UPDATE servers SET \"LAST_LOGIN\"=\'"+str(datetime.datetime.now())+"\' WHERE \"ID\"="+str(Id))
