@@ -17,10 +17,13 @@ class Logger(object) :
         self.cursor.execute("SELECT " + column_names + " FROM " + tale_name + " WHERE " + column_name2 + " IN " + values)
 
 
-    def track_exists(self, track_id):
+    def track_exists(self, column_names, table_name, column_name2, values):
         cur = self.conn.cursor()
-        cur.execute("SELECT fma_track_id FROM tracks WHERE fma_track_id = %s", (track_id,))
-        return cur.fetchone() is not None
+        cur.execute("SELECT " + column_names + " FROM " + table_name + " WHERE " + column_name2 + " = " + values)
+        if ( len(cur.fetchall()) > 0 ) :
+            return True
+        else :
+            return None
 
 
     def SQL_Update_Set_Where(self, tale_name, column_name, value, whereCondition, whereValue ) :
@@ -28,8 +31,11 @@ class Logger(object) :
 
 
     def SetOrigin(self, origin_k) :
-        SQL_Select_From_Where_In(   )
-
+        if( self.track_exists(  'name', 'origin', 'origin_key', origin_k  ) == None ) :
+            # No origin_k is in there [ Before test ]
+            print( origin_k + 'is not in db')
+        else :
+            print( origin_k + 'is in db')
 
 
     def __init__(self) :
@@ -97,7 +103,7 @@ class Logger(object) :
         if( status == "IGNORE" or status == "DONE" ) :
             # "UPDATE " + table_name + " SET " + column_name + " = " + value + " WHERE " + whereCondition + " = " + whereValue
             try :
-                SQL_Update_Set_Where('"execution_logs"', '"occur_timeends"', str(datetime.datetime.now() , '"execution_id"', extraKey)
+                SQL_Update_Set_Where('"execution_logs"', '"occur_timeends"', str(datetime.datetime.now()) , '"execution_id"', extraKey)
 
             except Exception, e:
                 RepContent = " This error is occured at Logger.py, You have to check if exceution_log is deleted! "
@@ -168,3 +174,4 @@ if __name__ == "__main__" :
     TestClass = testClass()
     print(Generate_PrivateCode())
     L = Logger(TestClass)
+    L.SetOrigin('KNOWN_LOG')
