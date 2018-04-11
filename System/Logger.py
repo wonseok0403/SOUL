@@ -7,6 +7,7 @@ sys.path.insert(0, os.getcwd() )
 
 from ObjectInfo import DatabaseClass
 def Generate_PrivateCode():
+    # YEAR-MONTH-DAYHOUR:MIN:SEC.MICROSEC
     return str(datetime.datetime.now()).replace(" ","")
 
 
@@ -14,6 +15,21 @@ class Logger(object) :
     # If you want just define logger,
     def SQL_Select_From_Where_In(self, column_names, table_name, column_name2, values) :
         self.cursor.execute("SELECT " + column_names + " FROM " + tale_name + " WHERE " + column_name2 + " IN " + values)
+
+
+    def track_exists(self, track_id):
+        cur = self.conn.cursor()
+        cur.execute("SELECT fma_track_id FROM tracks WHERE fma_track_id = %s", (track_id,))
+        return cur.fetchone() is not None
+
+
+    def SQL_Update_Set_Where(self, tale_name, column_name, value, whereCondition, whereValue ) :
+        self.cursor.execute("UPDATE " + table_name + " SET " + column_name + " = " + value + " WHERE " + whereCondition + " = " + whereValue )
+
+
+    def SetOrigin(self, origin_k) :
+        SQL_Select_From_Where_In(   )
+
 
 
     def __init__(self) :
@@ -36,14 +52,17 @@ class Logger(object) :
 
 
         elif( str(object) == "Engine" ) :
+            self.className = "Engine"
             return
 
 
         elif( str(object) == " SystemLoader" ) :
+            self.className = "SystemLoader"
             return
 
 
         elif( str(object) == "Kernel" ) :
+            self.className = "Kernel"
             return
 
 
@@ -53,14 +72,36 @@ class Logger(object) :
             self.Connect_LogDB()
 
 
-    def push_log(self, req_k, ser_k, repor_key, report):
-        # execution_id = [ NowYear ]_[ NowTime ]_
-        #, request_key , server_key
-        # report_key, origin_key
-        # status_key, occur_timedetect
+    def push_log(self, request_key, server_key, isReportRequest, ReportContent, origin_key, status_key, return_val, program_key):
+        # 1) execution_id = yyyy-mm-ddhh:mm:ss.ms < Generate_PrivateCode >
+        # request_key  = request_key
+        # server_key = server_key
+        # report_key = report_key
+        # origin_key = origin_key
+        # status_key =  status_key
+        # return_val = return_val
+        # program_key = program_key
+        # 2) if ( isReportRequest ) --> publish report!
+        # occur_timedetect =
         # occur_timeends, return_value
-        execution_id = Generate_PrivateCode()
 
+        # 1)
+        execution_id = Generate_PrivateCode() # Generate by time
+
+        # 2)
+        if( isReportRequest == True ) :
+            publishReport()
+
+        program_key = self.className
+        occur_timedetect = str( datetime.datetime.now() )
+        if( status == "IGNORE" or status == "DONE" ) :
+            # "UPDATE " + table_name + " SET " + column_name + " = " + value + " WHERE " + whereCondition + " = " + whereValue
+            try :
+                SQL_Update_Set_Where('"execution_logs"', '"occur_timeends"', str(datetime.datetime.now() , '"execution_id"', extraKey)
+
+            except Exception, e:
+                RepContent = " This error is occured at Logger.py, You have to check if exceution_log is deleted! "
+                push_log('"CONNECT"', '"LOCALHOST"', '"PROGRAM_OWNER"', True, RepContent, '"DANGER"', None)
 ##
 ##
 ##                                      FOR TEST                              */
@@ -119,7 +160,7 @@ class testClass(object):
                 print (' INPUT ERROR AT DB SETTINGS.TXT ' )
                 print (' (Input) Sort : ', Sort, ' Content : ', Content)
         # # END LOOP & for check
-        # self.DB.printInfo()
+        # self.DB.printInfo()N
 
 
 if __name__ == "__main__" :

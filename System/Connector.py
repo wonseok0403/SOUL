@@ -7,7 +7,7 @@ import sqlalchemy
 from pexpect import pxssh
 import time, datetime
 # from fabric.api import run, roles, env, execute
-
+# 뒤지겄네...
 def Shell_login(Shell, Hostname, Username, Password):
     Shell.login( Hostname, Username, Password)
     Shell.sendline('ls -al')
@@ -25,6 +25,7 @@ def Update_Success(cursor,conn,Id, isSuccess) :
     else :
         cursor.execute("UPDATE servers SET \"LAST_LOGIN\"=\'"+str(datetime.datetime.now())+"\' WHERE \"ID\"="+str(Id))
         cursor.execute("UPDATE servers SET \"IS_ERROR\"=\'"+str("YES")+"\' WHERE \"ID\"="+str(Id))
+
         conn.commit()
 
     conn.commit()
