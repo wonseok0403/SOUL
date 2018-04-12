@@ -27,6 +27,8 @@ class Configurator(object) :
         return 'Configurator'
 
 
+
+
 def ParseDataList_FromPath(FilePath) :
     # returns file contents in 'FilePath'
     # You can check your dir by using'print(os.getcwd())'

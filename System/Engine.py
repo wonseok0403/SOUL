@@ -15,3 +15,5 @@ if __name__ == "__main__" :
     SystemLoaderObject.LoadUserFiles()
 
     KernelObj = Kernel(SystemLoaderObject)
+    print( KernelObj.GoodServerList )
+    print( KernelObj.BadServerList )

@@ -13,7 +13,12 @@ class Kernel(object) :
     def __init__(self, object) :
         self.SystemLoader = object
         self.SystemLoader.printInfo()
+        self.GoodServerList = []
+        self.BadServerList = []
+
         self.Conn = Connector(self.SystemLoader)
+        self.GoodServerList = self.Conn.GoodServerList
+        self.BadServerList = self.Conn.BadServerList
 
     def __str__ (self):
         return "Kernel"

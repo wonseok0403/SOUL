@@ -36,7 +36,6 @@ class Connector(object) :
 
     def __init__(self, objects):
         # you must input 'SystemLoader in here'
-        print('oiasjdoifjaosdjfioajsdfio')
         self.SystemLoader = objects
         # o yes
         self.db = self.SystemLoader.DB
@@ -44,6 +43,8 @@ class Connector(object) :
         self.ServerList = [[]]
         self.conn_string = ""
         self.logger = Logger(self)
+        self.GoodServerList= []
+        self.BadServerList = []
 
         self.Connecting()
 
@@ -90,11 +91,15 @@ class Connector(object) :
                 cursor = self.conn.cursor()
                 Update_Success(cursor, self.conn,i[0], True)
 
+                self.GoodServerList.append(i)
+
             except pxssh.ExceptionPxssh, e :
                 cursor = self.conn.cursor()
                 Update_Success(cursor, self.conn,i[0],  False)
                 print( "pxssh failed on login.")
                 print( str(e) )
+
+                self.BadServerList.append(i)
 
 
     def Connect_getServerDB(self) :
