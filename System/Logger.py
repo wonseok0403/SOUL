@@ -47,14 +47,14 @@ class Logger(object) :
             ReportFile.close()
 
             # Push log for you made a report
-            vars = ReportKey + "', '" + ReportType + "', '" + str(datetime.datetime.now()).replace(" ","") + "', '" + Path +"', '" +Name +"'"
-
+            vars = "'" + ReportKey + "', '" + ReportType + "', '" + str(datetime.datetime.now()).replace(" ","") + "', '" + Path +"', '" +Name +"'"
+            self.SQL_Insert_Into_values('report', vars)
             # Push log for return report key
             return ReportKey
         else :
             RK = MakeReport(self, 'WARNING_SERVICE_REPORT', '/root/바탕화면/ServerPlayer/Report/', 'Logger', 'Report type : ' + ReportType + ' is not in DB! Please check service owner... before content : ' + Content + ' by ' + Name)
-            vars = RK + "', 'ERROR_SERVICE_REPORT', '" + str(datetime.datetime.now()).replace(" ","") + "', '" + Path + "', '" + name + "'"
-            SQL_Insert_Into_values('report', vars)
+            vars = "'" + RK + "', 'ERROR_SERVICE_REPORT', '" + str(datetime.datetime.now()).replace(" ","") + "', '" + Path + "', '" + name + "'"
+            self.SQL_Insert_Into_values('report', vars)
             push_log( 'DB_REQUEST', 'localhost', RK, 'PROGRAM_OWNER', 'BAD', 'None', 'LOGGER')
 
 
@@ -66,7 +66,7 @@ class Logger(object) :
     def SQL_Insert_Into_values(self, table_name, values) :
         cur = self.conn.cursor()
         cur.execute("INSERT INTO " + table_name + " VALUES ( " + values + " )" )
-        print(' log line64, SQL INSERT INTO VALUES done')
+        self.conn.commit()
 
 
     def track_exists(self, table_name, column_name2, values):
@@ -161,8 +161,7 @@ class Logger(object) :
             # request_key, server_key, Report_Key, origin_key, status_key, return_val, program_key
             values = "'" + execution_id + "', '" + request_key + "', '" + server_key + "', '" + Report_Key + "', '" + origin_key +"', '" + status_key + "', '" +  str(datetime.datetime.now()) + "', '" + ""+ "', '" + return_val + "', '" + program_key + "'"
             self.SQL_Insert_Into_values( 'execution_logs', values)
-##
-##
+
 ##                                      FOR TEST                              */
 ##                             Listening Roller coaster : Aprl 12.            */
 ##                                  Desginer. Wonseok                         */
