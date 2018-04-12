@@ -7,7 +7,6 @@ import sqlalchemy
 from pexpect import pxssh
 import time, datetime
 # from fabric.api import run, roles, env, execute
-# 뒤지겄네...
 def Shell_login(Shell, Hostname, Username, Password):
     Shell.login( Hostname, Username, Password)
     Shell.sendline('ls -al')
@@ -37,6 +36,7 @@ class Connector(object) :
 
     def __init__(self, objects):
         # you must input 'SystemLoader in here'
+        print('oiasjdoifjaosdjfioajsdfio')
         self.SystemLoader = objects
         # o yes
         self.db = self.SystemLoader.DB
