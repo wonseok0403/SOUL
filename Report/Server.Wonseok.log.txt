@@ -1,0 +1,5 @@
+
+The server host (2) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-13 15:26:35.956339 Log end. 
+The server host (5) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-13 15:26:36.132237 Log end. 
+The server host (5) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-13 15:29:45.939661 Log end. 
+The server host (2) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-13 15:29:46.137294 Log end. 

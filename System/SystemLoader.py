@@ -70,6 +70,8 @@ class SystemLoader(object) :
                 self.Admin.ID = Content
             elif Sort == 'MODE' :
                 self.Admin.MODE = Content
+            elif Sort == 'PATH' :
+                self.Admin.PATH = Content
             else :
                 print (' INPUT ERROR AT USER SETTINGS.TXT ' )
                 print (' (Input) Sort : ', Sort, ' Content : ', Content)

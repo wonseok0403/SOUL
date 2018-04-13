@@ -91,6 +91,7 @@ class Connector(object) :
                 cursor = self.conn.cursor()
                 Update_Success(cursor, self.conn,i[0], True)
 
+                # Added Aprl 12
                 self.GoodServerList.append(i)
 
             except pxssh.ExceptionPxssh, e :
@@ -99,6 +100,7 @@ class Connector(object) :
                 print( "pxssh failed on login.")
                 print( str(e) )
 
+                # Added Aprl 12
                 self.BadServerList.append(i)
 
 

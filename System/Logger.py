@@ -47,7 +47,9 @@ class Logger(object) :
             ReportFile.close()
 
             # Push log for you made a report
-            vars = "'" + ReportKey + "', '" + ReportType + "', '" + str(datetime.datetime.now()).replace(" ","") + "', '" + Path +"', '" +Name +"'"
+            vars = "'" + ReportKey + "', '" + ReportType + "', '" + str(datetime.datetime.now()).replace(" ","") + "', '" + Path +"', '" + FileName +"'"
+            # Aprl 13. Name -> FileName by wonseok
+
             self.SQL_Insert_Into_values('report', vars)
             # Push log for return report key
             return ReportKey
