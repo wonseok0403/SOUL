@@ -14,23 +14,23 @@ from DatabaseClass import DB
 from AdministratorClass import Administrator
 
 class Server (object) :
+    #
+    # def __init__ (self) :
+    #     # as same as function named __init__ (12 parameters) ..
+    #     self.ID = ""
+    #     self.CONNECTION_PORT = ""
+    #     self.CONNECTION_SORT = ""
+    #     self.CONNECTION_IPADDRESS = ""
+    #     self.CONNECTION_PASSWORD = ""
+    #     self.CONNECTION_USERNAME = ""
+    #     self.OWNER_NAME = ""
+    #     self.OWNER_ID = ""
+    #     self.SERVER_OS = ""
+    #     self.SERVER_NAME = ""
+    #     self.IS_ERROR = ""
 
-    def __init__ (self) :
-        # as same as function named __init__ (12 parameters) ..
-        self.ID = ""
-        self.CONNECTION_PORT = ""
-        self.CONNECTION_SORT = ""
-        self.CONNECTION_IPADDRESS = ""
-        self.CONNECTION_PASSWORD = ""
-        self.CONNECTION_USERNAME = ""
-        self.OWNER_NAME = ""
-        self.OWNER_ID = ""
-        self.SERVER_OS = ""
-        self.SERVER_NAME = ""
-        self.IS_ERROR = ""
 
-
-    def __init__(self, i, p, s, ip, pa, u, n, id, os, Na, IE) :
+    def __init__(self, i=None, p=None, s=None, ip=None, pa=None, u=None, n=None, id=None, os=None, Na=None, IE=None) :
         self.ID = i                     # Primary Key for DB
         self.CONNECTION_PORT = p        # Connection port ( ssh = 22 )
         self.CONNECTION_SORT = s        # ssh or ftp ...
