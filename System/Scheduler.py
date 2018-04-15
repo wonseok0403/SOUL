@@ -15,6 +15,32 @@ from ObjectInfo import Server
 # You don't worry to make command and send it to server.
 class Scheduler(object) :
 
+    def __init__(self, object) :
+        # This argument is important. Korean usually say this produce,
+        # Year -> Month -> Day -> Hour -> Minute -> Second
+        # But Crontab command's produce is
+        # Minute -> Hour -> Day -> Month -> DATE
+        # So this dict will change American's dict to Korean's
+
+        if( str(object) != "Server" ) :
+            # remain the log if you have more time.
+            print( str(object) + "'can't register any cron service! ")
+        else :
+            self.Server = object
+
+        self.KeyOfList = {
+            0 : 3,
+            1 : 4,
+            2 : 2,
+            3 : 1,
+            4 : 0
+        }
+
+        self.InputList = [None, None, None, None, None]     # This list is raw list
+        self.OutputList = [None, None, None, None, None]    # This list is changed for crontab command
+        self.CommandAtLst = ""                          # This command is final string when you write in crontab command
+
+
     # This function makes command for sending server.
     # This command will be exectued in user's server.
     def MakeCommand(self) :
@@ -23,7 +49,7 @@ class Scheduler(object) :
             strTmp += str(self.OutputList[i]) + " "
         strTmp += self.CommandAtLst
 
-        return ('cat < (crontab -l) < (echo "' + strTmp + '") | crontab -')
+        return ('cat <(crontab -l) <(echo "' + strTmp + '") | crontab -')
 
     # MIN HOUR DAY MONTH DATE
     # producedure : Month -> Date -> Day -> Hour -> Min
@@ -94,48 +120,75 @@ class Scheduler(object) :
             strTmp = self.MakeCommand()
             flag = raw_input(strTmp + '\nCommand will be excuted! is it right? (y/n) ')
             if( flag == 'y' or flag == 'Y' ) :
-                print('Okay!')
+                print('Sending...')
                 break
-            else :
+            else  :
+                print('Do you want to exit? (y/n) ')
+                falg = raw_input()
+                if( flag == 'y' or flag == 'Y') :
+                    return
+
                 print('Retry it!')
                 self.InputList = [None, None, None, None, None]
                 self.OutputList = [None, None, None, None, None]
                 flag = raw_input()
+        
+        # from break command
+        return strTmp
 
 
+    # This function is for send command server. 
+    # Main alogorithm is, check the server if service is online, send the command, remain the log.
+    # Lst updated at Aprl 15 with I'm not laughing ( Leesang )
     def SendCommandToServer(self):
-        print("")
-        # You have to write code in here
-        # -- Lst Aprl 14
+        # Is server okay to connect ?
+        if( self.Server.IS_ERROR == 'YES' ) :  # YES = Error
+
+            # The server has some error. Try connect?
+            print('The report says server is not online. Do you want to test the server? (y/n)')
+            isOkay = raw_input()
+            if( (isOkay is not 'y') and (isOkay is not 'Y')) : 
+                # No I don't want.
+                print('return to before menu!')
+                flag = raw_input()
+                return
+
+            # Yes! I want.
+            isOkayServer, ServerMsg = self.Server.isTryConnect()
+            if( isOkayServer == False ) :
+                # Server connection is bad.
+                print('Sorry, the server connection is so bad.')
+                # Send log < Not connect >
+                return
+                
+        print('Server connection is successful!')
+        print('Press any key to continue!')
+        flag = raw_input()  # just UI
+
+        # Server is good or was not good but now good.
+        # You have to connect the server and send message to DB ! below here
+        Usr_Comd = self.MakeSchedule()                          # Get Command.
+        isSuccess, msg = self.Server.ThrowCommand(Usr_Comd)     # This function returns if success, and message from try ~ catch
+        if( isSuccess == True ) :
+            self.Server.ThrowCommand('crontab -l')
+            print('I sent message successfully!')
+        else :
+            print("I coudln't send message to server!")
+            # Send log < Not connect or cron msg >
 
 
-    def __init__(self, object) :
-        # This argument is important. Korean usually say this produce,
-        # Year -> Month -> Day -> Hour -> Minute -> Second
-        # But Crontab command's produce is
-        # Minute -> Hour -> Day -> Month -> DATE
-        # So this dict will change American's dict to Korean's
-        self.KeyOfList = {
-            0 : 3,
-            1 : 4,
-            2 : 2,
-            3 : 1,
-            4 : 0
-        }
 
-        self.InputList = [None, None, None, None, None]     # This list is raw list
-        self.OutputList = [None, None, None, None, None]    # This list is changed for crontab command
-        self.CommandAtLst = ""                          # This command is final string when you write in crontab command
-
-        if( str(object) != "Server" ) :
-            print( str(object) + "'can't register any cron service! ")
-
+        
 
 
 # note :
 # lst update aprl 14 with 'Stronger than you - Sans and ... trio'
 # Test : <None>
-if __name__ == "__main__" :
+
+
+
+if (__name__ == "__main__") :
+    '''
     # You need server
     testServer = Server.Server()
 
@@ -144,3 +197,10 @@ if __name__ == "__main__" :
 
     # You have to execute function named 'MakeSchedule'
     Scheduler.MakeSchedule()
+
+    # Test completed. it was successful. ( ~ Aprl 15 )
+    '''
+    testServer = Server.Server(1, 22, 'ssh', '45.77.177.76', '3@mHze=5K{1wj){}', 'root', 'Wonseok', 970403, 'ubuntu', 'WonseokTestbuntu',None,'2018-01010101')
+    Scheduler = Scheduler(testServer)
+
+    Scheduler.SendCommandToServer()

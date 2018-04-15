@@ -10,27 +10,13 @@
 #               Unfortunately, now, if your DB is not 'postgreSQl', you can't control it.
 
 
+from pexpect import pxssh       # Added at Aprl 15
 from DatabaseClass import DB
 from AdministratorClass import Administrator
 
 class Server (object) :
-    #
-    # def __init__ (self) :
-    #     # as same as function named __init__ (12 parameters) ..
-    #     self.ID = ""
-    #     self.CONNECTION_PORT = ""
-    #     self.CONNECTION_SORT = ""
-    #     self.CONNECTION_IPADDRESS = ""
-    #     self.CONNECTION_PASSWORD = ""
-    #     self.CONNECTION_USERNAME = ""
-    #     self.OWNER_NAME = ""
-    #     self.OWNER_ID = ""
-    #     self.SERVER_OS = ""
-    #     self.SERVER_NAME = ""
-    #     self.IS_ERROR = ""
 
-
-    def __init__(self, i=None, p=None, s=None, ip=None, pa=None, u=None, n=None, id=None, os=None, Na=None, IE=None) :
+    def __init__(self, i=None, p=None, s=None, ip=None, pa=None, u=None, n=None, id=None, os=None, Na=None, IE=None, LST_DATE=None) :
         self.ID = i                     # Primary Key for DB
         self.CONNECTION_PORT = p        # Connection port ( ssh = 22 )
         self.CONNECTION_SORT = s        # ssh or ftp ...
@@ -42,8 +28,39 @@ class Server (object) :
         self.SERVER_OS = os             # Ubuntu 16.04 ..
         self.SERVER_NAME = Na           # WonseokServer..
         self.IS_ERROR = IE              # True? False? or something
+        self.CONNECTION_LASTDATE = LST_DATE
 
 
+    def isTryConnect(self) :
+        try :
+            shell = pxssh.pxssh()
+            shell.login( self.CONNECTION_IPADDRESS, self.CONNECTION_USERNAME, self.CONNECTION_PASSWORD)
+            shell.sendline('ls -al')
+            shell.prompt()
+            print( "before\n" + shell.before)
+
+            shell.logout()
+        
+        except pxssh.ExceptionPxssh as e :
+            return False, e
+
+        return True, 'GOOD'
+
+
+    def ThrowCommand(self, comd) :
+        try : 
+            shell = pxssh.pxssh()
+            shell.login( self.CONNECTION_IPADDRESS, self.CONNECTION_USERNAME, self.CONNECTION_PASSWORD)
+            shell.sendline(comd)
+            shell.prompt()
+            print("command : " + shell.before)
+
+            shell.logout()
+
+        except pxssh.ExceptionPxssh as e :
+            return False, e
+        
+        return True, 'GOOD'
 
 
     def __str__ (self) :
@@ -58,3 +75,14 @@ if __name__ == "__main__" :
     S = Server()
     S.DB = DB()
     S.Admin = Administrator()
+
+
+#
+#   Develop Log ( Aprl 15 )
+#
+
+# Aprl 15
+#  Desginer Wonseok. J
+#
+#  I think server has to have connector's function named 'Connect_Servers)
+#  So I copied that function to Server.py

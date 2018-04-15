@@ -28,11 +28,18 @@ class Kernel(object) :
         _Server.db = self.Conn.db
         return _Server
 
-    def __init__(self):
-        print('Log : Kernel Initilizer is loaded!')
-        self.Conn = Connector()
 
-    def __init__(self, object) :
+    # def __init__(self):
+    #     print('Log : Kernel Initilizer is loaded!')
+    #     self.Conn = Connector()
+
+
+    def __init__(self, object = None) :
+        # Initializer check
+        if( object == None ) :
+            print('Kernel error. You must define kerenel with System Loader!')
+            return
+
         self.SystemLoader = object
         self.SystemLoader.printInfo()
         self.GoodServerList = []

@@ -31,10 +31,11 @@ def Update_Success(cursor,conn,Id, isSuccess) :
     cursor.close()
 
 class Connector(object) :
-    def __init__(self) :
-        self.SystemLoader = SystemLoader()
+    # def __init__(self) :
+    #     self.SystemLoader = SystemLoader()
 
-    def __init__(self, objects):
+
+    def __init__(self, objects = None):
         # you must input 'SystemLoader in here'
         self.SystemLoader = objects
         # o yes
@@ -94,7 +95,7 @@ class Connector(object) :
                 # Added Aprl 12
                 self.GoodServerList.append(i)
 
-            except pxssh.ExceptionPxssh, e :
+            except pxssh.ExceptionPxssh as e :
                 cursor = self.conn.cursor()
                 Update_Success(cursor, self.conn,i[0],  False)
                 print( "pxssh failed on login.")
@@ -124,7 +125,17 @@ class Connector(object) :
 
 
         else :
-            print ( "Sorry, " + db.SORTS + " isn't supported yet.....")
+            print ( "Sorry, " + self.db.SORTS + " isn't supported yet.....")
 
     def __str__(self) :
         return "Connector"
+
+# 
+#       Develop Log ( Aprl 15 )
+#
+
+# Aprl 15
+#  Desginer Wonseok. J
+#
+#   Some lines are deleted and added some '\n' characters.
+#   Becuase I changed IDE from atom to VS Code.
