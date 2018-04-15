@@ -102,7 +102,9 @@ class Scheduler(object) :
                 self.OutputList = [None, None, None, None, None]
                 flag = raw_input()
 
+
     def SendCommandToServer(self):
+        print("")
         # You have to write code in here
         # -- Lst Aprl 14
 
