@@ -7,6 +7,29 @@ import sqlalchemy
 from pexpect import pxssh
 import time, datetime
 # from fabric.api import run, roles, env, execute
+def SendLog_ConnectionBad (Logger, Admin, ID, Role, Host, ExceptionE) :
+    # Log structure :
+    ##   [ADMIN.ID] tried to connect [ServerID] by [ServerRole]@[Host] at [Date.time]
+    ##   Server was [Server.isOkay]. And program tried to connect, but server connection is BAD.
+    ##   specific report which pssh says is here : [Exception E]
+    strLogMsg = str(Admin.ID) + " tried to connect " + str(ID) + " by " + str(Role)+"@" + str(Host)  + " at " + str(datetime.datetime.now()) + "\n" + \
+                "Program tried to connect, but server connection is BAD." + "\n" + \
+                "specific report which pssh says is here : " + str(ExceptionE)
+    Logger.SetOrigin('KNOWN_LOG')
+    RK = Logger.MakeReport( 'SERVICE_STATUS_CHECK', Admin.PATH, Admin.NAME, strLogMsg)
+    Logger.push_log( 'CONNECT', Host, RK, 'KNOWN_LOG', 'BAD', 'Connector.SendLog_ConnectionBad', 'CONNECTOR')
+
+def SendLog_ConnectionGood (Logger, Admin, ID, Role, Host) :
+    # Log structure :
+    ##   [ADMIN.ID] tried to connect [ServerID] by [ServerRole]@[Host] at [Date.time]
+    ##   Server was [Server.isOkay]. And program tried to connect, and server connection is GOOD
+    strLogMsg = str(Admin.ID) + " tried to connect " + str(ID) + " by " + str(Role)+"@" + str(Host)  + " at " + str(datetime.datetime.now()) + "\n" + \
+                ".Program tried to connect, and it was successful.\n" 
+    Logger.SetOrigin('KNOWN_LOG')
+    RK = Logger.MakeReport( 'SERVICE_STATUS_CHECK', Admin.PATH, Admin.NAME, strLogMsg)
+    Logger.push_log( 'CONNECT', Host, RK, 'KNOWN_LOG', 'BAD', 'Connector.SendLog_ConnectionBad', 'CONNECTOR')
+
+
 def Shell_login(Shell, Hostname, Username, Password):
     Shell.login( Hostname, Username, Password)
     Shell.sendline('ls -al')
@@ -91,6 +114,8 @@ class Connector(object) :
 
                 cursor = self.conn.cursor()
                 Update_Success(cursor, self.conn, i[0], True)
+                # Logger, Admin, ID, Role, Host, ExceptionE
+                SendLog_ConnectionGood(self.logger, self.admin, i[0], username, hostname)
 
                 # Added Aprl 12
                 self.GoodServerList.append(i)
@@ -98,6 +123,7 @@ class Connector(object) :
             except pxssh.ExceptionPxssh as e :
                 cursor = self.conn.cursor()
                 Update_Success(cursor, self.conn, i[0],  False)
+                SendLog_ConnectionBad(self.logger, self.admin, i[0], username, hostname, e)
                 print( "pxssh failed on login.")
                 print( str(e) )
 
