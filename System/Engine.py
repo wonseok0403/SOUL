@@ -4,6 +4,7 @@ from Logger import Logger
 import os, sys
 sys.path.insert(0, os.getcwd())
 from ObjectInfo import AdministratorClass
+from Scheduler import Scheduler
 import fabric
 
 
@@ -17,3 +18,7 @@ if __name__ == "__main__" :
     KernelObj = Kernel(SystemLoaderObject)
     print( KernelObj.GoodServerList )
     print( KernelObj.BadServerList )
+
+    testServer = KernelObj.serverToServer(KernelObj.BadServerList[0])
+    Scheduler = Scheduler(testServer)
+    Scheduler.MakeAndSendCommand()

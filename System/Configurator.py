@@ -28,7 +28,7 @@ class Configurator(object) :
 
 
     def Shell_logout(self, Shell) :
-        s.logout()
+        Shell.logout()
 
 
     def SendLog_NotConnecting(self, ExceptionClass) :
@@ -58,8 +58,8 @@ class Configurator(object) :
             self.SendLog_NotConnecting(e)
 
 
-    def __init__(self) :
-        self.Logger = Logger( Configurator )
+    # def __init__(self) :
+    #     self.Logger = Logger( Configurator )
 
 
     def __init__(self, object, adminObject) :
@@ -92,6 +92,7 @@ def ParseDataList_FromPath(FilePath) :
 #
 #       The codes below over here are for test.
 #       Last updated at Aprl 13. < Tough cookie - Zico (feat. Don.mills) >
+#       Test is completed at Aprl 15. < Dejavu ( Remastered ) - BeWhY >
 
 def ParseSortCont_FromString(List_forParse):
     # It only returns two data which are Sort and Content of string in listself.
@@ -141,6 +142,6 @@ class testClass(object):
         # # END LOOP & for check
         # self.DB.printInfo()N
 
-if __name__ == "__main__" :
-    TestClass = testClass()
-    Conf1 = Configurator(TestClass)
+# if __name__ == "__main__" :
+#     TestClass = testClass()
+#     Conf1 = Configurator(TestClass)

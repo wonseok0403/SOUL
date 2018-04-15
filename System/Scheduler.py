@@ -1,14 +1,19 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 # @Author       Wonseok
 # @Designer     Wonseok
 # @Start at     Aprl. 13
-# @Last at      Aprl. 14
+# @Last at      Aprl. 15
 # @Music        Angel - Drunken Tiger with Yoon - mire, bizzy
 # @Information  This class supports you that you can do cron service easy.
 #               If you want to execute program at regular time, you can regist it easily.
 #               And also, cron service remains logs in log DB.
 import os, sys
 sys.path.insert(0, os.getcwd() )
+from Logger import Logger
 from ObjectInfo import Server
+import time, datetime
 
 # Scheduler class make schedule using crontab command for user in easy way.
 # It will check if the server is okay to connect, and if that is okay then it will send command to server.
@@ -35,7 +40,7 @@ class Scheduler(object) :
             3 : 1,
             4 : 0
         }
-
+        self.db = object.db
         self.InputList = [None, None, None, None, None]     # This list is raw list
         self.OutputList = [None, None, None, None, None]    # This list is changed for crontab command
         self.CommandAtLst = ""                          # This command is final string when you write in crontab command
@@ -140,24 +145,28 @@ class Scheduler(object) :
     # This function is for send command server. 
     # Main alogorithm is, check the server if service is online, send the command, remain the log.
     # Lst updated at Aprl 15 with I'm not laughing ( Leesang )
-    def SendCommandToServer(self):
+    def MakeAndSendCommand(self):
         # Is server okay to connect ?
-        if( self.Server.IS_ERROR == 'YES' ) :  # YES = Error
-
+        # Make Logger for if you have some issue to connect server, make report and send log to DB.
+        SchedulerLogger = Logger(self)              # This is for before line.
+        
+        if( self.Server.IS_ERROR == 'YES' ) :
             # The server has some error. Try connect?
             print('The report says server is not online. Do you want to test the server? (y/n)')
             isOkay = raw_input()
             if( (isOkay is not 'y') and (isOkay is not 'Y')) : 
-                # No I don't want.
+                # Server status is BAD < report >
+                # No I don't want to connect.
                 print('return to before menu!')
                 flag = raw_input()
                 return
 
-            # Yes! I want.
             isOkayServer, ServerMsg = self.Server.isTryConnect()
             if( isOkayServer == False ) :
-                # Server connection is bad.
+                # Server status is BAD < report >
+                # Yes I wanted to connect. But server is still BAD.
                 print('Sorry, the server connection is so bad.')
+                self.SendLog_ConnectionBad(SchedulerLogger, ServerMsg)
                 # Send log < Not connect >
                 return
                 
@@ -177,6 +186,23 @@ class Scheduler(object) :
             # Send log < Not connect or cron msg >
 
 
+    def SendLog_ConnectionBad (self, Logger, ExceptionMsg) :
+        # Log structure :
+        ##   [ADMIN.ID] tried to connect [ServerID] by [ServerRole]@[Host] at [Date.time]
+        ##   Server was [Server.isOkay]. And program tried to connect, but server connection is BAD.
+        ##   specific report which pssh says is here : [Exception E]
+        strLogMsg = str(self.Server.admin.ID) + " tried to connect " + str(self.Server.ID) + " by " + str(self.Server.CONNECTION_USERNAME)+"@" + str(self.Server.CONNECTION_IPADDRESS)  + " at " + str(datetime.datetime.now()) + "\n" + \
+                    "Server was " + self.Server.IS_ERROR + ". And program tried to connect, but server connection is BAD." + "\n" + \
+                    "specific report which pssh says is here : " + str(ExceptionMsg)
+        Logger.SetOrigin('KNOWN_LOG')
+        RK = Logger.MakeReport( 'SERVICE_STATUS_CHECK', self.Server.admin.PATH, 'Wonseok', strLogMsg)
+        Logger.push_log( 'CONNECT', self.Server.ID, RK, 'KNOWN_LOG', 'BAD', 'Scheduler.SendLog_ConnectionBad', 'SCHEDULER')
+
+
+    def __str__(self) :
+        return "Scheduler" 
+
+
 
         
 
@@ -184,9 +210,6 @@ class Scheduler(object) :
 # note :
 # lst update aprl 14 with 'Stronger than you - Sans and ... trio'
 # Test : <None>
-
-
-
 if (__name__ == "__main__") :
     '''
     # You need server
@@ -203,4 +226,4 @@ if (__name__ == "__main__") :
     testServer = Server.Server(1, 22, 'ssh', '45.77.177.76', '3@mHze=5K{1wj){}', 'root', 'Wonseok', 970403, 'ubuntu', 'WonseokTestbuntu',None,'2018-01010101')
     Scheduler = Scheduler(testServer)
 
-    Scheduler.SendCommandToServer()
+    Scheduler.MakeAndSendCommand()

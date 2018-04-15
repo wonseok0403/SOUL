@@ -26,6 +26,7 @@ class Kernel(object) :
         print(server)
         _Server = Server.Server( server[0], server[1], server[2], server[3], server[4], server[5], server[6], server[7], server[8], server[9], server[10] )
         _Server.db = self.Conn.db
+        _Server.admin = self.Conn.admin
         return _Server
 
 

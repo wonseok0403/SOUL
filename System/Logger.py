@@ -1,7 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import os, sys
 
+# @Author       Wonseok
+# @Designer     Wonseok
+# @Start at     Aprl. 10
+# @Last at      Aprl. 15
+# @Music        Pianoman - MAMAMOO
+# @Information  This class makes report, make and throw log to local DB.
+#               You have to make sure to connect your local DB with program.
+import os, sys
 import psycopg2
 import time, datetime
 
@@ -54,15 +61,15 @@ class Logger(object) :
             # Push log for return report key
             return ReportKey
         else :
-            RK = MakeReport(self, 'WARNING_SERVICE_REPORT', '/root/바탕화면/ServerPlayer/Report/', 'Logger', 'Report type : ' + ReportType + ' is not in DB! Please check service owner... before content : ' + Content + ' by ' + Name)
-            vars = "'" + RK + "', 'ERROR_SERVICE_REPORT', '" + str(datetime.datetime.now()).replace(" ","") + "', '" + Path + "', '" + name + "'"
+            RK = self.MakeReport( 'WARNING_SERVICE_REPORT', Path, 'Logger', 'Report type : ' + ReportType + ' is not in DB! Please check service owner... before content : ' + Content + ' by ' + Name)
+            vars = "'" + RK + "', 'ERROR_SERVICE_REPORT', '" + str(datetime.datetime.now()).replace(" ","") + "', '" + Path + "', '" + FileName + "'"
             self.SQL_Insert_Into_values('report', vars)
-            push_log( 'DB_REQUEST', 'localhost', RK, 'PROGRAM_OWNER', 'BAD', 'None', 'LOGGER')
+            self.push_log( 'DB_REQUEST', 'localhost', RK, 'PROGRAM_OWNER', 'BAD', 'None', 'LOGGER')
 
 
     def SQL_Select_From_Where_In(self, column_names, table_name, column_name2, values) :
         cur = self.conn.cursor()
-        cur.execute("SELECT " + column_names + " FROM " + tale_name + " WHERE " + column_name2 + " IN " + values)
+        cur.execute("SELECT " + column_names + " FROM " + table_name + " WHERE " + column_name2 + " IN " + values)
 
 
     def SQL_Insert_Into_values(self, table_name, values) :
@@ -86,8 +93,8 @@ class Logger(object) :
 
         return True
 
-    def SQL_Update_Set_Where(self, tale_name, column_name, value, whereCondition, whereValue ) :
-        self.cursor.execute("UPDATE " + table_name + " SET " + column_name + " = " + value + " WHERE " + whereCondition + " = " + whereValue )
+    def SQL_Update_Set_Where(self, table_name, column_name, value, whereCondition, whereValue ) :
+        self.conn.cursor.execute("UPDATE " + table_name + " SET " + column_name + " = " + value + " WHERE " + whereCondition + " = " + whereValue )
 
 
     def SetOrigin(self, origin_k) :
@@ -102,23 +109,21 @@ class Logger(object) :
         self.conn = psycopg2.connect(self.conn_string)
 
 
-    def __init__(self) :
-        print('Logger is made by nothing')
-        self.className = ""
-        self.Connect_LogDB()
-
-
     # If you define logger as something special
-    def __init__(self, object ) :
-        # Connector
-        print('Logger making start!')
-        print( object )
-        self.className = str(object)
-        self.conn_string ="host="+object.db.HOST+" dbname=logdb "+ "user="+object.db.USER+" password="+object.db.PW
-        self.Connect_LogDB()
+    def __init__(self, object=None) :
+        if( object == None ) :
+           print('Logger is made by nothing')
+           self.className = ""
+           self.Connect_LogDB()
+        else:
+            print('Logger making start!')
+            print( object )
+            self.className = str(object)
+            self.conn_string ="host="+object.db.HOST+" dbname=logdb "+ "user="+object.db.USER+" password="+object.db.PW
+            self.Connect_LogDB()
 
 
-    def push_log(self, request_key, server_key, Report_Key, origin_key, status_key, return_val, program_key):
+    def push_log(self, request_key, server_key, Report_Key, origin_key, status_key, return_val, program_key, extraKey=None):
         # You have to check if those keys are in DB
         # push_log( self, request_key, server_key, Report_Key, origin_key, status_key, return_val, program_key )
         # 1) execution_id = yyyy-mm-ddhh:mm:ss.ms < Generate_PrivateCode >
@@ -139,8 +144,8 @@ class Logger(object) :
             self.track_exists('status', 'status_key', status_key) == None or
             self.track_exists('program', 'program_key', program_key) == None) :
             # MakeReport(self, ReportType, Path, Name, Content)
-            MakeReport(self, 'WARNING_SERVICE_REPORT', '/root/바탕화면/ServerPlayer/Report/', 'Logger', 'Please key check! : ' + \
-            request_key, Report_key, origin_key, status_key, program_key )
+            self.MakeReport('WARNING_SERVICE_REPORT', '/root/바탕화면/ServerPlayer/Report/', 'Logger', 'Please key check! : ' + \
+            str(request_key, Report_Key, origin_key, status_key, program_key) )
             print('Line 129 is completed!')
 
 
@@ -151,17 +156,16 @@ class Logger(object) :
         if( status_key == "IGNORE" or status_key == "DONE" ) :
             # "UPDATE " + table_name + " SET " + column_name + " = " + value + " WHERE " + whereCondition + " = " + whereValue
             try :
-                SQL_Update_Set_Where('"execution_logs"', '"occur_timeends"', str(datetime.datetime.now()) , '"execution_id"', extraKey)
-
+                self.SQL_Update_Set_Where('"execution_logs"', '"occur_timeends"', str(datetime.datetime.now()) , '"execution_id"', extraKey)
             except Exception, e:
                 RepContent = " This error is occured at Logger.py, You have to check if exceution_log is deleted! "
-                push_log('"CONNECT"', '"LOCALHOST"', '"PROGRAM_OWNER"', True, RepContent, '"DANGER"', None)
+                self.push_log('"CONNECT"', '"LOCALHOST"', '"PROGRAM_OWNER"', True, RepContent, '"DANGER"', None)
                 print('line 144 is completed')
 
         else :
             # SQL_Insert_Into_values(self, table_name, values)
             # request_key, server_key, Report_Key, origin_key, status_key, return_val, program_key
-            values = "'" + execution_id + "', '" + request_key + "', '" + server_key + "', '" + Report_Key + "', '" + origin_key +"', '" + status_key + "', '" +  str(datetime.datetime.now()) + "', '" + ""+ "', '" + return_val + "', '" + program_key + "'"
+            values = "'" + str(execution_id) + "', '" + request_key + "', '" + str(server_key) + "', '" + str(Report_Key) + "', '" + origin_key +"', '" + status_key + "', '" +  str(datetime.datetime.now()) + "', '" + ""+ "', '" + return_val + "', '" + program_key + "'"
             self.SQL_Insert_Into_values( 'execution_logs', values)
 
 ##                                      FOR TEST                              */

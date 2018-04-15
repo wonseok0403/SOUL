@@ -13,7 +13,7 @@ def Shell_login(Shell, Hostname, Username, Password):
     Shell.prompt()
     print ("before\n"+ Shell.before)
 
-def Update_Success(cursor,conn,Id, isSuccess) :
+def Update_Success(cursor, conn, Id, isSuccess) :
     if isSuccess == True :
         cursor.execute("UPDATE servers SET \"LAST_LOGIN\"=\'"+str(datetime.datetime.now())+"\' WHERE \"ID\"="+str(Id))
         cursor.execute("UPDATE servers SET \"IS_ERROR\"=\'"+str("")+"\' WHERE \"ID\"="+str(Id))
@@ -90,14 +90,14 @@ class Connector(object) :
                 s.logout()
 
                 cursor = self.conn.cursor()
-                Update_Success(cursor, self.conn,i[0], True)
+                Update_Success(cursor, self.conn, i[0], True)
 
                 # Added Aprl 12
                 self.GoodServerList.append(i)
 
             except pxssh.ExceptionPxssh as e :
                 cursor = self.conn.cursor()
-                Update_Success(cursor, self.conn,i[0],  False)
+                Update_Success(cursor, self.conn, i[0],  False)
                 print( "pxssh failed on login.")
                 print( str(e) )
 
