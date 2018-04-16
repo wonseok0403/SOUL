@@ -199,7 +199,7 @@ class testClass(object):
 
 
     def __str__(self) :
-        return "Connector"
+        return "CONNECTOR"
 
 
     def LoadDBFiles(self):

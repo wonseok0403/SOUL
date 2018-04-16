@@ -61,4 +61,4 @@ class Kernel(object) :
 
 
     def __str__ (self):
-        return "Kernel"
+        return "KERNEL"

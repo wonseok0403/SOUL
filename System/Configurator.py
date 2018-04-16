@@ -67,8 +67,8 @@ class Configurator(object) :
         # If configurator becomes bigger and has to support more functions,
         # code it on here.
         print("asdf", str(object))
-        if( str(object) == "Server" ) :
-            self.master = "Server"
+        if( str(object) == "SERVER" ) :
+            self.master = "SERVER"
             self.Server = object
             self.Admin = adminObject
 

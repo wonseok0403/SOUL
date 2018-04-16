@@ -83,4 +83,4 @@ class SystemLoader(object) :
         self.DB.printInfo()
 
     def __str__(self) :
-        return "SystemLoader"
+        return "SYSTEMLOADER"

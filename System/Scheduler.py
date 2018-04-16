@@ -27,7 +27,7 @@ class Scheduler(object) :
         # Minute -> Hour -> Day -> Month -> DATE
         # So this dict will change American's dict to Korean's
 
-        if( str(object) != "Server" ) :
+        if( str(object) != "SERVER" ) : # program key is SERVER
             # remain the log if you have more time.
             print( str(object) + "'can't register any cron service! ")
         else :
@@ -200,7 +200,7 @@ class Scheduler(object) :
 
 
     def __str__(self) :
-        return "Scheduler" 
+        return "SCHEDULER" 
 
 
 

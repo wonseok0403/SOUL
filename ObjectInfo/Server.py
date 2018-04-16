@@ -4,7 +4,7 @@
 # @Author       Wonseok
 # @Designer     Wonseok
 # @Start at     Aprl. 5
-# @Last at      Aprl. 13
+# @Last at      Aprl. 15
 # @Music        Castle of magic by MC Sniper
 # @Information  This class is only for server each of being managed.
 #               Unfortunately, now, if your DB is not 'postgreSQl', you can't control it.
@@ -64,7 +64,7 @@ class Server (object) :
 
 
     def __str__ (self) :
-        return "Server"
+        return "SERVER"
 
 
 

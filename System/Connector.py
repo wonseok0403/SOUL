@@ -9,10 +9,10 @@ import time, datetime
 # from fabric.api import run, roles, env, execute
 def SendLog_ConnectionBad (Logger, Admin, ID, Role, Host, ExceptionE) :
     # Log structure :
-    ##   [ADMIN.ID] tried to connect [ServerID] by [ServerRole]@[Host] at [Date.time]
+    ##   [ADMIN.ID] named [ADMIN.NAME] tried to connect [ServerID] by [ServerRole]@[Host] at [Date.time]
     ##   Server was [Server.isOkay]. And program tried to connect, but server connection is BAD.
     ##   specific report which pssh says is here : [Exception E]
-    strLogMsg = str(Admin.ID) + " tried to connect " + str(ID) + " by " + str(Role)+"@" + str(Host)  + " at " + str(datetime.datetime.now()) + "\n" + \
+    strLogMsg = str(Admin.ID) + " named " + str(Admin.NAME) + " tried to connect " + str(ID) + " by " + str(Role)+"@" + str(Host)  + " at " + str(datetime.datetime.now()) + "\n" + \
                 "Program tried to connect, but server connection is BAD." + "\n" + \
                 "specific report which pssh says is here : " + str(ExceptionE)
     Logger.SetOrigin('KNOWN_LOG')
@@ -23,7 +23,7 @@ def SendLog_ConnectionGood (Logger, Admin, ID, Role, Host) :
     # Log structure :
     ##   [ADMIN.ID] tried to connect [ServerID] by [ServerRole]@[Host] at [Date.time]
     ##   Server was [Server.isOkay]. And program tried to connect, and server connection is GOOD
-    strLogMsg = str(Admin.ID) + " tried to connect " + str(ID) + " by " + str(Role)+"@" + str(Host)  + " at " + str(datetime.datetime.now()) + "\n" + \
+    strLogMsg = str(Admin.ID) + " named " + str(Admin.NAME) + " tried to connect " + str(ID) + " by " + str(Role)+"@" + str(Host)  + " at " + str(datetime.datetime.now()) + "\n" + \
                 ".Program tried to connect, and it was successful.\n" 
     Logger.SetOrigin('KNOWN_LOG')
     RK = Logger.MakeReport( 'SERVICE_STATUS_CHECK', Admin.PATH, Admin.NAME, strLogMsg)
@@ -154,7 +154,7 @@ class Connector(object) :
             print ( "Sorry, " + self.db.SORTS + " isn't supported yet.....")
 
     def __str__(self) :
-        return "Connector"
+        return "CONNECTOR"
 
 # 
 #       Develop Log ( Aprl 15 )
