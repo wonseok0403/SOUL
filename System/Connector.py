@@ -139,12 +139,12 @@ class Connector(object) :
         self.ServerList = the_frame.values.tolist()
         print("Log, ServerList : ", self.ServerList)
 
-
+    # remain log
     def Connect_DB(self):
-        print('connect db')
+        # print('connect db')          # for log
         if self.db.SORTS == 'psql' :
             self.conn_string = "host="+self.db.HOST+" dbname="+self.db.NAME+" user="+self.db.USER+" password="+self.db.PW
-            print( self.conn_string )
+            #print( self.conn_string )   # for log
             # dialect+driver://username:password@host:port/database
             self.engine = sqlalchemy.create_engine("postgresql+psycopg2://" + self.db.USER.replace("'","") + ":" + self.db.PW.replace("'","")+"@" + self.db.HOST.replace("'","") + ":" + self.db.PORT.replace("'","")+ "/" + self.db.NAME.replace("'",""))
             self.conn = psycopg2.connect(self.conn_string)

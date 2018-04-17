@@ -177,13 +177,29 @@ class Scheduler(object) :
         # Server is good or was not good but now good.
         # You have to connect the server and send message to DB ! below here
         Usr_Comd = self.MakeSchedule()                          # Get Command.
-        isSuccess, msg = self.Server.ThrowCommand(Usr_Comd)     # This function returns if success, and message from try ~ catch
+        isSuccess, ExMsg = self.Server.ThrowCommand(Usr_Comd)     # This function returns if success, and message from try ~ catch
         if( isSuccess == True ) :
             self.Server.ThrowCommand('crontab -l')
             print('I sent message successfully!')
         else :
             print("I coudln't send message to server!")
-            # Send log < Not connect or cron msg >
+            self.SendLog_ThrowMsgError(SchedulerLogger, Usr_Comd, ExMsg)
+
+
+    #       Created at Aprl 17. with Parchelbel: Canon In D Major) In Jazz
+    #       Below functions are for logger.
+    #       Written by Wonseok. J
+    def SendLog_ThrowMsgError (self, Logger, command, ExceptionMsg) :
+        # Log structure :
+        ##   [ADMIN.ID] tried to throw [command] to [ServerID] by [ServerRole]@[Host] at [Date.time]
+        ##   Server was [Server.isOkay]. And program tried to connect, but server connection is BAD.
+        ##   specific report which pssh says is here : [Exception E]
+        strLogMsg = str(self.Server.admin.ID) + " tried to throw " + str(command) + " to " + str(self.Server.ID) + " by " + str(self.Server.CONNECTION_USERNAME)+"@" + str(self.Server.CONNECTION_IPADDRESS)  + " at " + str(datetime.datetime.now()) + "\n" + \
+                    "Server was " + self.Server.IS_ERROR + ". And program tried to connect, but server connection is BAD." + "\n" + \
+                    "specific report which pssh says is here : " + str(ExceptionMsg)
+        Logger.SetOrigin('KNOWN_LOG')
+        RK = Logger.MakeReport( 'SERVICE_STATUS_CHECK', self.Server.admin.PATH, self.Server.admin.NAME, strLogMsg)
+        Logger.push_log('REQ_COMMAND', self.Server.ID, RK, 'KNOWN_LOG', 'BAD', 'Scheduler.SendLog_ThrowMsgError', 'SCHEDULER')
 
 
     def SendLog_ConnectionBad (self, Logger, ExceptionMsg) :

@@ -11,12 +11,13 @@
 
 
 from pexpect import pxssh       # Added at Aprl 15
+import psycopg2
 from DatabaseClass import DB
 from AdministratorClass import Administrator
 
 class Server (object) :
 
-    def __init__(self, i=None, p=None, s=None, ip=None, pa=None, u=None, n=None, id=None, os=None, Na=None, IE=None, LST_DATE=None) :
+    def __init__(self, i=None, p=None, s=None, ip=None, pa=None, u=None, n=None, id=None, os=None, Na=None, IE=None, LST_DATE=None, db_key=None, obj_key=None) :
         self.ID = i                     # Primary Key for DB
         self.CONNECTION_PORT = p        # Connection port ( ssh = 22 )
         self.CONNECTION_SORT = s        # ssh or ftp ...
@@ -29,8 +30,14 @@ class Server (object) :
         self.SERVER_NAME = Na           # WonseokServer..
         self.IS_ERROR = IE              # True? False? or something
         self.CONNECTION_LASTDATE = LST_DATE
+        self.DB_KEY = db_key
+        self.OBJECT_KEY = obj_key
 
+        self.local_db = None
+        self.local_admin = None
 
+    # Try connecting if server is okay
+    # okay -> self.iserror= true, No -> self.iserror= false
     def isTryConnect(self) :
         try :
             shell = pxssh.pxssh()
@@ -42,11 +49,14 @@ class Server (object) :
             shell.logout()
         
         except pxssh.ExceptionPxssh as e :
+            self.IS_ERROR = "YES"   # Error occur
             return False, e
 
+        self.IS_ERROR = None        # No error
         return True, 'GOOD'
 
 
+    # Using this function makes you easier to throw command.
     def ThrowCommand(self, comd) :
         try : 
             shell = pxssh.pxssh()
@@ -63,18 +73,38 @@ class Server (object) :
         return True, 'GOOD'
 
 
+    # Using this function, you can get server's owner easy
+    def GetServerOwner(self) :
+        # @Return   True -> get admin information successfully, False -> No
+        # @Befroe   You have to make sure that this server class has 'local_db'
+        # Algo : Connect DB -> Using Foreinn key -> Get Admin's information -> put it in admin class
+        if self.DB.IS_CONNECTED == False :
+            print("This server doesn't have local database!\n \
+                   You hae to execute db.Connect_DB first!")
+            return False, "Not connected local_db"
+        else :
+            try :
+                cur = self.DB.conn.cursor()
+                cur.execute("SELECT * FROM administrator WHERE admin_key=" + str(self.OWNER_ID) )
+                owner_info = cur.fetchall()
+            
+            except psycopg2.Error as e :
+                print(e)
+        
     def __str__ (self) :
+        # upper only
         return "SERVER"
-
 
 
 #
 #       Test if server can have Administrator and Database
 #
 if __name__ == "__main__" :
-    S = Server()
-    S.DB = DB()
+    S = Server(1, 22, 'ssh', '45.77.177.76', '3@mHze=5K{1wj){}', 'root', 'Wonseok.J', 970403, 'ubuntu', 'wonseokbuntu', None, '2018-03-02', None, None)
+    S.DB = DB("psql", "'localhost'", "'5432'", "'testdb'", "'1234'", "'test'")
+    S.DB.Connect_DB()
     S.Admin = Administrator()
+    S.local_admin = S.GetServerOwner()
 
 
 #

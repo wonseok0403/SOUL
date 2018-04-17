@@ -1,17 +1,21 @@
 
 # This class will have information between this program with program log & configure DB
 # After load onnection, connector has to have connection with servers.
+import psycopg2
+import sqlalchemy
 class DB(object) :
-    def __init__(self):
+    def __init__(self, Sorts=None, Host=None, Port=None, Name=None, Pw=None, User=None):
         print('Log : Database initializer is loaded! ')
         # If you use sort 'PostgreSQL', input 'psql', 'MS-SQL', input 'mssql',
         # 'MySQL', input 'mysql', 'ORACLE', input 'orac', 'SQLITE', 'sqlite'
-        self.SORTS = ""                     # Database management name
-        self.HOST = ""                      # Database host ip xxx.xxx.xxx.xxx
-        self.PORT = ""                      # Database port (1000 ~ 9999)
-        self.NAME = ""                      # Database Name
-        self.PW   = ""                      # Database password
-        self.USER = ""                      # Database user
+        self.SORTS = Sorts                     # Database management name
+        self.HOST = Host                      # Database host ip xxx.xxx.xxx.xxx
+        self.PORT = Port                      # Database port (1000 ~ 9999)
+        self.NAME = Name                      # Database Name
+        self.PW   = Pw                      # Database password
+        self.USER = User                      # Database user
+
+        self.IS_CONNECTED = False
 
     def printInfo(self) :
         # STRUCTURE :
@@ -24,6 +28,26 @@ class DB(object) :
         print('USER  : ' + self.USER)
         print('PW    : ' + "Check the file (for security)")
         print('')
+
+
+    # This function is from Connector.py
+    # This function connect DB with elements which are initialized
+    # remain log
+    def Connect_DB(self) :
+        print('connect db')
+        if self.SORTS == 'psql' :
+            try :
+                self.conn_string = "host="+self.HOST+" dbname="+self.NAME+" user="+self.USER+" password="+self.PW
+                print( self.conn_string )
+                self.conn = psycopg2.connect(self.conn_string)
+            except psycopg2.Error as e :
+                # remain log
+                print(e)
+                self.IS_CONNECTED = False
+            self.IS_CONNECTED = True
+        
+        else :
+            print("Sorry, " + self.SORTS + " isn't supported yet.")
 
     def __str__(self) :
         return "DatabaseClass"

@@ -7,13 +7,13 @@
 
 
 class Administrator(object) :
-    def __init__(self):
+    def __init__(self, Name=None, Path=None, Pw=None, Mode=None, Id=None):
         print('Log : Administrator initializer is loaded! ')
-        self.NAME = ""
-        self.PW = ""
-        self.ID = ""
-        self.MODE = ""
-        self.PATH = ""
+        self.NAME = Name
+        self.PATH = Path
+        self.PW = Pw
+        self.MODE = Mode
+        self.ID = Id
 
     def printInfo(self) :
         # STRUCTURE :
