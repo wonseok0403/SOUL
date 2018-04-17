@@ -6,3 +6,202 @@ The server host (5) has some issue to connect.                     here is the l
 The server host (2) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-16 19:10:08.681140 Log end. 
 The server host (2) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-17 16:09:42.360303 Log end. 
 The server host (5) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-17 16:09:42.529352 Log end. 
+root makes unknown error in <type 'object'>, location is in Server.GetServerOwner at 2018-04-18 01:17:36.175488
+Exception massage is 'DB' object has no attribute 'conn'.
+--------------- Object info ---------------
+ID = 1
+Connection_port = 22
+CONNECTION_SORT = ssh
+CONNECTION_IPADDRESS = 45.77.177.76
+CONNECTION_PASSWORD = 3@mHze=5K{1wj){}
+CONNECTION_USERNAME = root
+OWNER_NAME = Wonseok.J
+OWNER_ID = 970403
+SERVER_OS = ubuntu
+SERVER_NAME = wonseokbuntu
+IS_ERROR = None
+CONNECTION_LASTDATE = 2018-03-02
+DB_KEY = None
+OBJECT_KEY = None
+--------------- Admin  info ---------------
+NAME = WonseokPATH = /root/바탕화면/ServerPlayer/Report/PW = rootMODE = AdminID = root
+Log End.
+And unknown error occured in Logger.MakeReport. You have to check it.
+
+root makes unknown error in <type 'object'>, location is in Server.GetServerOwner at 2018-04-18 01:18:48.463768
+Exception massage is 'DB' object has no attribute 'conn'.
+--------------- Object info ---------------
+ID = 1
+Connection_port = 22
+CONNECTION_SORT = ssh
+CONNECTION_IPADDRESS = 45.77.177.76
+CONNECTION_PASSWORD = 3@mHze=5K{1wj){}
+CONNECTION_USERNAME = root
+OWNER_NAME = Wonseok.J
+OWNER_ID = 970403
+SERVER_OS = ubuntu
+SERVER_NAME = wonseokbuntu
+IS_ERROR = None
+CONNECTION_LASTDATE = 2018-03-02
+DB_KEY = None
+OBJECT_KEY = None
+--------------- Admin  info ---------------
+NAME = WonseokPATH = /root/바탕화면/ServerPlayer/Report/PW = rootMODE = AdminID = root
+Log End.
+And unknown error occured in Logger.MakeReport. You have to check it.
+
+root makes unknown error in <type 'object'>, location is in Server.GetServerOwner at 2018-04-18 01:19:01.771660
+Exception massage is 'DB' object has no attribute 'conn'.
+--------------- Object info ---------------
+ID = 1
+Connection_port = 22
+CONNECTION_SORT = ssh
+CONNECTION_IPADDRESS = 45.77.177.76
+CONNECTION_PASSWORD = 3@mHze=5K{1wj){}
+CONNECTION_USERNAME = root
+OWNER_NAME = Wonseok.J
+OWNER_ID = 970403
+SERVER_OS = ubuntu
+SERVER_NAME = wonseokbuntu
+IS_ERROR = None
+CONNECTION_LASTDATE = 2018-03-02
+DB_KEY = None
+OBJECT_KEY = None
+--------------- Admin  info ---------------
+NAME = WonseokPATH = /root/바탕화면/ServerPlayer/Report/PW = rootMODE = AdminID = root
+Log End.
+And unknown error occured in Logger.MakeReport. You have to check it.
+
+The server host (2) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-18 01:21:26.813606 Log end. 
+The server host (5) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-18 01:21:26.997404 Log end. 
+root makes unknown error in <type 'object'>, location is in Server.GetServerOwner at 2018-04-18 02:18:29.598377
+Exception massage is 'DB' object has no attribute 'conn'.
+--------------- Object info ---------------
+ID = 1
+Connection_port = 22
+CONNECTION_SORT = ssh
+CONNECTION_IPADDRESS = 45.77.177.76
+CONNECTION_PASSWORD = 3@mHze=5K{1wj){}
+CONNECTION_USERNAME = root
+OWNER_NAME = Wonseok.J
+OWNER_ID = 970403
+SERVER_OS = ubuntu
+SERVER_NAME = wonseokbuntu
+IS_ERROR = None
+CONNECTION_LASTDATE = 2018-03-02
+DB_KEY = None
+OBJECT_KEY = None
+--------------- Admin  info ---------------
+NAME = WonseokPATH = /root/바탕화면/ServerPlayer/Report/PW = rootMODE = AdminID = root
+Log End.
+And unknown error occured in Logger.MakeReport. You have to check it.
+
+root makes unknown error in <type 'object'>, location is in Server.GetServerOwner at 2018-04-18 02:19:18.624264
+Exception massage is 'DB' object has no attribute 'conn'.
+--------------- Object info ---------------
+ID = 1
+Connection_port = 22
+CONNECTION_SORT = ssh
+CONNECTION_IPADDRESS = 45.77.177.76
+CONNECTION_PASSWORD = 3@mHze=5K{1wj){}
+CONNECTION_USERNAME = root
+OWNER_NAME = Wonseok.J
+OWNER_ID = 970403
+SERVER_OS = ubuntu
+SERVER_NAME = wonseokbuntu
+IS_ERROR = None
+CONNECTION_LASTDATE = 2018-03-02
+DB_KEY = None
+OBJECT_KEY = None
+--------------- Admin  info ---------------
+NAME = WonseokPATH = /root/바탕화면/ServerPlayer/Report/PW = rootMODE = AdminID = root
+Log End.
+And unknown error occured in Logger.MakeReport. You have to check it.
+
+root makes unknown error in <type 'object'>, location is in Server.GetServerOwner at 2018-04-18 02:19:48.260052
+Exception massage is 'DB' object has no attribute 'conn'.
+--------------- Object info ---------------
+ID = 1
+Connection_port = 22
+CONNECTION_SORT = ssh
+CONNECTION_IPADDRESS = 45.77.177.76
+CONNECTION_PASSWORD = 3@mHze=5K{1wj){}
+CONNECTION_USERNAME = root
+OWNER_NAME = Wonseok.J
+OWNER_ID = 970403
+SERVER_OS = ubuntu
+SERVER_NAME = wonseokbuntu
+IS_ERROR = None
+CONNECTION_LASTDATE = 2018-03-02
+DB_KEY = None
+OBJECT_KEY = None
+--------------- Admin  info ---------------
+NAME = WonseokPATH = /root/바탕화면/ServerPlayer/Report/PW = rootMODE = AdminID = root
+Log End.
+And unknown error occured in Logger.MakeReport. You have to check it.
+
+root makes unknown error in <type 'object'>, location is in Server.GetServerOwner at 2018-04-18 02:33:15.185490
+Exception massage is 'DB' object has no attribute 'conn'.
+--------------- Object info ---------------
+ID = 1
+Connection_port = 22
+CONNECTION_SORT = ssh
+CONNECTION_IPADDRESS = 45.77.177.76
+CONNECTION_PASSWORD = 3@mHze=5K{1wj){}
+CONNECTION_USERNAME = root
+OWNER_NAME = Wonseok.J
+OWNER_ID = 970403
+SERVER_OS = ubuntu
+SERVER_NAME = wonseokbuntu
+IS_ERROR = None
+CONNECTION_LASTDATE = 2018-03-02
+DB_KEY = None
+OBJECT_KEY = None
+--------------- Admin  info ---------------
+NAME = WonseokPATH = /root/바탕화면/ServerPlayer/Report/PW = rootMODE = AdminID = root
+Log End.
+And unknown error occured in Logger.MakeReport. You have to check it.
+
+root makes unknown error in <type 'object'>, location is in Server.GetServerOwner at 2018-04-18 02:33:15.201921
+Exception massage is 'DB' object has no attribute 'conn'.
+--------------- Object info ---------------
+ID = 4
+Connection_port = 22
+CONNECTION_SORT = ssh
+CONNECTION_IPADDRESS = 45.77.180.147
+CONNECTION_PASSWORD = P]9p{PWKRu=+o7y]
+CONNECTION_USERNAME = root
+OWNER_NAME = Wonseok.J
+OWNER_ID = 970403
+SERVER_OS = ubuntu
+SERVER_NAME = WonseokTestCent
+IS_ERROR = None
+CONNECTION_LASTDATE = 2018-03-02
+DB_KEY = None
+OBJECT_KEY = None
+--------------- Admin  info ---------------
+NAME = WonseokPATH = /root/바탕화면/ServerPlayer/Report/PW = rootMODE = AdminID = root
+Log End.
+And unknown error occured in Logger.MakeReport. You have to check it.
+
+root makes unknown error in <type 'object'>, location is in Server.GetServerOwner at 2018-04-18 02:33:38.050264
+Exception massage is 'DB' object has no attribute 'conn'.
+--------------- Object info ---------------
+ID = 4
+Connection_port = 22
+CONNECTION_SORT = ssh
+CONNECTION_IPADDRESS = 45.77.180.147
+CONNECTION_PASSWORD = P]9p{PWKRu=+o7y]
+CONNECTION_USERNAME = root
+OWNER_NAME = Wonseok.J
+OWNER_ID = 970403
+SERVER_OS = ubuntu
+SERVER_NAME = WonseokTestCent
+IS_ERROR = None
+CONNECTION_LASTDATE = 2018-03-02
+DB_KEY = None
+OBJECT_KEY = None
+--------------- Admin  info ---------------
+NAME = WonseokPATH = /root/바탕화면/ServerPlayer/Report/PW = rootMODE = AdminID = root
+Log End.
+And unknown error occured in Logger.MakeReport. You have to check it.

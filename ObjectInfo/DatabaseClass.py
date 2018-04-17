@@ -2,9 +2,10 @@
 # This class will have information between this program with program log & configure DB
 # After load onnection, connector has to have connection with servers.
 import psycopg2
+from AdministratorClass import Administrator
 import sqlalchemy
 class DB(object) :
-    def __init__(self, Sorts=None, Host=None, Port=None, Name=None, Pw=None, User=None):
+    def __init__(self, Sorts=None, Host=None, Port=None, Name=None, Pw=None, User=None, DB_KEY=None, SERV_KEY=None):
         print('Log : Database initializer is loaded! ')
         # If you use sort 'PostgreSQL', input 'psql', 'MS-SQL', input 'mssql',
         # 'MySQL', input 'mysql', 'ORACLE', input 'orac', 'SQLITE', 'sqlite'
@@ -14,8 +15,16 @@ class DB(object) :
         self.NAME = Name                      # Database Name
         self.PW   = Pw                      # Database password
         self.USER = User                      # Database user
+        self.DB_KEY = DB_KEY
 
         self.IS_CONNECTED = False
+        self.OBJECT = None
+        self.SERVER_KEY = SERV_KEY
+    
+    def AdminToDatabaseConnect(self, Admin) :
+        # This class using admin's key to get Database information, and connect it.
+        pass
+
 
     def printInfo(self) :
         # STRUCTURE :

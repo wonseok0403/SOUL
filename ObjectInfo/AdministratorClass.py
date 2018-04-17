@@ -19,11 +19,20 @@ class Administrator(object) :
         # STRUCTURE :
         # NAME : \nHOST : \n ...
         print('Administrator Information ~')
-        print('Name  : ' + self.NAME)
-        print('ID    : ' + self.ID)
+        print('Name  : ' + str(self.NAME))
+        print('PATH  : ' + self.PATH)
+        print('ID    : ' + str(self.ID))
         print('MODE  : ' + self.MODE)
         print('PW    : ' + "Check the file (for security)")
         print('')
+    
+    def getInfo(self) :
+        strMsg = "NAME = " + str(self.NAME) + \
+            "PATH = " + str(self.PATH) + \
+            "PW = " + str(self.PW) + \
+            "MODE = " + str(self.MODE) + \
+            "ID = " + str(self.ID)
+        return strMsg
 
     def __str__(self) :
-        return "AdministratorClass"
+        return "ADMINISTRATORCLASS"
