@@ -148,6 +148,7 @@ class Connector(object) :
             # dialect+driver://username:password@host:port/database
             self.engine = sqlalchemy.create_engine("postgresql+psycopg2://" + self.db.USER.replace("'","") + ":" + self.db.PW.replace("'","")+"@" + self.db.HOST.replace("'","") + ":" + self.db.PORT.replace("'","")+ "/" + self.db.NAME.replace("'",""))
             self.conn = psycopg2.connect(self.conn_string)
+            self.db.IS_CONNECTED = True
 
 
         else :

@@ -20,11 +20,15 @@ class DB(object) :
         self.IS_CONNECTED = False
         self.OBJECT = None
         self.SERVER_KEY = SERV_KEY
-    
+
     def AdminToDatabaseConnect(self, Admin) :
         # This class using admin's key to get Database information, and connect it.
         pass
 
+    def getInfo(self) :
+        return ( str(self.SORTS) + " " + str(self.HOST) + " " + str(self.PORT) + " " + str(self.NAME) + \
+        str(self.PW) + " " + str(self.USER) + " " + str(self.DB_KEY) + " " + str(self.IS_CONNECTED) + " " + \
+        str(self.OBJECT) + " " + str(self.SERVER_KEY) + "\n" )
 
     def printInfo(self) :
         # STRUCTURE :
@@ -57,6 +61,24 @@ class DB(object) :
         
         else :
             print("Sorry, " + self.SORTS + " isn't supported yet.")
+            return False
+
+    def isTryConnect(self) :
+        print('connect db')
+        if self.SORTS == 'psql' :
+            try :
+                self.conn_string = "host="+self.HOST+" dbname="+self.NAME+" user="+self.USER+" password="+self.PW
+                print( self.conn_string )
+                self.conn = psycopg2.connect(self.conn_string)
+            except psycopg2.Error as e :
+                # remain log
+                return False, e
+            except Exception as e :
+                return False, e
+            return True, "GOOD"
+        
+        else :
+            return False, "That DB is not supported."
 
     def __str__(self) :
-        return "DatabaseClass"
+        return "DATABASECLASS"
