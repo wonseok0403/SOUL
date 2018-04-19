@@ -1,0 +1,12 @@
+---------------------------------------------------------------
+This maill is from server manager from 'Wonseok'.
+If you do not want to get mail or have some issue, call him at
+    
+    (+82)-10-6253-1685 or wonseok786@gmail.com
+
+This system version is 0.9 < Alpha >.
+This mail is sent automatically and you can't reply in this mail.
+If you want to check some version of this system or log of this,
+check the local Database.
+Mail info End.
+----------------------------------------------------------------
