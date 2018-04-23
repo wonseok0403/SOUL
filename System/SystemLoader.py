@@ -28,10 +28,10 @@ class SystemLoader(object) :
         self.Admin = AdministratorClass.Administrator()
         self.DB = DatabaseClass.DB()
         print('System Loader Execute : ')
-        print(os.getcwd())
 
     def EndProgram(self, Code):
-        print('System End.')
+        #print('System End.')
+        pass
 
     def LoadDBFiles(self):
         # ParseDataFromPath returns list in file contents

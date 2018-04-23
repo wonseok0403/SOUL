@@ -205,3 +205,10 @@ OBJECT_KEY = None
 NAME = WonseokPATH = /root/바탕화면/ServerPlayer/Report/PW = rootMODE = AdminID = root
 Log End.
 And unknown error occured in Logger.MakeReport. You have to check it.
+
+The server host (2) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-21 01:43:13.501825 Log end. 
+The server host (5) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-21 01:43:13.686171 Log end. 
+The server host (2) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-21 02:11:27.490026 Log end. 
+The server host (5) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-21 02:11:27.638477 Log end. 
+The server host (2) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-23 12:17:28.026074 Log end. 
+The server host (5) has some issue to connect.                     here is the log from server host.Could not establish connection to host This log                     is written at Configurator-SendLog_Notconnecting. Today date is 2018-04-23 12:17:28.157645 Log end. 
