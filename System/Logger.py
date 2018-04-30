@@ -39,7 +39,22 @@ def Generate_ReportKey(FileName) :
     # for this rule (windows file name rule) ':' is changed for '-' --> ex) Kernel.log.2018-01-01-01-01-01.01010...
     return FileName + str(datetime.datetime.now()).replace(" ","")
 
+def Exit(code) :
+    # code 100 : OS Error. Your os is not supported in this system.
+    print("WARNNING : You can't execute program. \n Error code : " + str(code))
+    SetExecuteLog('Engine initialize is failed', code)
+    exit()
 
+BeforeTime = datetime.datetime.now()
+def SetExecuteLog(code, ErrorCode) :
+    global BeforeTime
+    now = datetime.datetime.now()
+    LogFile = open(os.getcwd() + '/UserConfig/LoggerLog.txt', "a")
+    LogFile.write('Code : ' + str(code) + '\n')
+    if( ErrorCode ) :
+        LogFile.write('ErCode : ' + str(ErrorCode) + '\n')
+    LogFile.write('Written time : ' + str(now) + ' [' + str(now - BeforeTime) + ']'+ '\n')
+    BeforeTime = now
 
 class Logger(object) :
     # If you want just define logger,
@@ -111,9 +126,12 @@ class Logger(object) :
     def SetOrigin(self, origin_k) :
         if( self.track_exists(  'origin', 'origin_key', origin_k  ) == False ) :
             # No origin_k is in there [ Before test ]
-            print( origin_k + 'is not in db')
+            # 6646464
+            SetExecuteLog(str(origin_k) + ' is not in db! program exit!', 'LOGER.SETORIGIN')
+            print( 'Please check the Logger.log' )
+            Exit('Logger.setorigin')
         else :
-            print( origin_k + 'is in db')
+            SetExecuteLog(str(origin_k) + ' is in DB', None)
 
 
     def Connect_LogDB(self) :
@@ -133,8 +151,8 @@ class Logger(object) :
            self.className = ""
            self.Connect_LogDB()
         else:
-            print('Logger making start!')
-            print( object )
+            # print('Logger making start!')
+            # print( object )
             self.className = str(object)
             self.object = object
             self.conn_string ="host="+object.db.HOST+" dbname=logdb "+ "user="+object.db.USER+" password="+object.db.PW

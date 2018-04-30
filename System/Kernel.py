@@ -23,7 +23,7 @@ class Kernel(object) :
     def serverToServer(self, server) :
         # the server is just element in list.
         # Server is a element which is class named 'server'
-        print(server)
+        # print(server)
         _Server = Server.Server( server[0], server[1], server[2], server[3], server[4], server[5], server[6], server[7], server[8], server[9], server[10] )
         _Server.db = self.Conn.db
         _Server.admin = self.Conn.admin
@@ -42,7 +42,7 @@ class Kernel(object) :
             return
 
         self.SystemLoader = object
-        self.SystemLoader.printInfo()
+        #self.SystemLoader.printInfo()
         self.GoodServerList = []
         self.BadServerList = []
 
@@ -51,12 +51,14 @@ class Kernel(object) :
         self.BadServerList = self.Conn.BadServerList
 
         Configurators_Badguys = []
+        print("  Re-checking bad servers connection starts")
         for i in self.BadServerList :
-            print("Bad guys will have more connection!")
             serv = self.serverToServer(i)
             Conf = Configurator(serv, self.Conn.admin)
             Conf.ConnectSSH()
             Configurators_Badguys.append(Conf)
+
+        print('Kernel is successfully loaded!')
 
 
 

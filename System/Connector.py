@@ -6,7 +6,19 @@ import pandas
 import sqlalchemy
 from pexpect import pxssh
 import time, datetime
-# from fabric.api import run, roles, env, execute
+import os
+
+BeforeTime = datetime.datetime.now()
+def SetExecuteLog(code, ErrorCode) :
+    global BeforeTime
+    now = datetime.datetime.now()
+    LogFile = open(os.getcwd() + '/UserConfig/ConnectorLog.txt', "a")
+    LogFile.write('Code : ' + str(code) + '\n')
+    if( ErrorCode ) :
+        LogFile.write('ErCode : ' + str(ErrorCode) + '\n')
+    LogFile.write('Written time : ' + str(now) + ' [' + str(now - BeforeTime) + ']'+ '\n')
+    BeforeTime = now
+
 def SendLog_ConnectionBad (Logger, Admin, ID, Role, Host, ExceptionE) :
     # Log structure :
     ##   [ADMIN.ID] named [ADMIN.NAME] tried to connect [ServerID] by [ServerRole]@[Host] at [Date.time]
@@ -32,9 +44,9 @@ def SendLog_ConnectionGood (Logger, Admin, ID, Role, Host) :
 
 def Shell_login(Shell, Hostname, Username, Password):
     Shell.login( Hostname, Username, Password)
-    Shell.sendline('ls -al')
+    Shell.sendline('uname -a')
     Shell.prompt()
-    print ("before\n"+ Shell.before)
+    SetExecuteLog(str(Hostname) + " Msg : " + Shell.before, None)
 
 def Update_Success(cursor, conn, Id, isSuccess) :
     if isSuccess == True :
@@ -52,6 +64,12 @@ def Update_Success(cursor, conn, Id, isSuccess) :
 
     conn.commit()
     cursor.close()
+
+def MakeListToMsg( listUsrInput ) :
+    Msg = ""
+    for i in listUsrInput :
+        Msg += str(i) + '\n'
+    return Msg
 
 class Connector(object) :
     # def __init__(self) :
@@ -124,20 +142,20 @@ class Connector(object) :
                 cursor = self.conn.cursor()
                 Update_Success(cursor, self.conn, i[0],  False)
                 SendLog_ConnectionBad(self.logger, self.admin, i[0], username, hostname, e)
-                print( "pxssh failed on login.")
-                print( str(e) )
+                SetExecuteLog( str(hostname) + " pxssh failed on login.", str(e))
 
                 # Added Aprl 12
                 self.BadServerList.append(i)
 
 
     def Connect_getServerDB(self) :
-        print("Log, (Connect_getServerDB), conn_string : ", self.conn_string)
+        SetExecuteLog('(getServerDB) ' + self.conn_string, None)
         self.conn = psycopg2.connect(self.conn_string)
         the_frame = pdsql.read_sql_table("servers", self.engine)
-        print( the_frame.values.tolist() )
+
         self.ServerList = the_frame.values.tolist()
-        print("Log, ServerList : ", self.ServerList)
+        ListMsg = MakeListToMsg(self.ServerList)
+        SetExecuteLog('Server List : ' + ListMsg, None)
 
     # remain log
     def Connect_DB(self):

@@ -1,0 +1,10 @@
+Code : KNOWN_LOG is in DB
+Written time : 2018-04-30 20:51:14.148954 [0:00:05.544753]
+Code : KNOWN_LOG is in DB
+Written time : 2018-04-30 20:51:17.907480 [0:00:03.758526]
+Code : KNOWN_LOG is in DB
+Written time : 2018-04-30 20:51:18.065966 [0:00:00.158486]
+Code : KNOWN_LOG is in DB
+Written time : 2018-04-30 20:51:21.408296 [0:00:03.342330]
+Code : KNOWN_LOG is in DB
+Written time : 2018-04-30 20:51:23.707811 [0:00:02.299515]

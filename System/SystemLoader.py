@@ -27,7 +27,7 @@ class SystemLoader(object) :
         # self.Admin = Administrator()
         self.Admin = AdministratorClass.Administrator()
         self.DB = DatabaseClass.DB()
-        print('System Loader Execute : ')
+        print('System Loader is Loaded! ... [OK] ')
 
     def EndProgram(self, Code):
         #print('System End.')

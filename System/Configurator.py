@@ -45,7 +45,6 @@ class Configurator(object) :
 
     def ConnectSSH(self) :
         # as similar as Connector's Connect_Servers
-
         try :
             sh = pxssh.pxssh()
             hostname = self.Server.CONNECTION_IPADDRESS
@@ -56,6 +55,7 @@ class Configurator(object) :
 
         except pxssh.ExceptionPxssh as e :
             self.SendLog_NotConnecting(e)
+            print('  ' + str(hostname) + 'connection is bad! check the log!')
 
 
     # def __init__(self) :
@@ -66,7 +66,6 @@ class Configurator(object) :
         # Configurator must control server only < at Aprl 13 >
         # If configurator becomes bigger and has to support more functions,
         # code it on here.
-        print("asdf", str(object))
         if( str(object) == "SERVER" ) :
             self.master = "SERVER"
             self.Server = object
