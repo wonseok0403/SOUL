@@ -17,12 +17,12 @@ from AdministratorClass import Administrator
 import time, datetime
 
 import os, sys
-from System import Logger
 sys.path.insert(0, os.getcwd())
+from System import Logger
 class Server (object) :
 
     def __init__(self, i=None, p=None, s=None, ip=None, pa=None, u=None, n=None, id=None, os=None, Na=None, IE=None, LST_DATE=None, db_key=None, obj_key=None) :
-        self.ID = i                     # Primary Key for DB
+        self.ID = i                     # Primary Key for Serv
         self.CONNECTION_PORT = p        # Connection port ( ssh = 22 )
         self.CONNECTION_SORT = s        # ssh or ftp ...
         self.CONNECTION_IPADDRESS = ip  # 192.168.10.1 ..
@@ -182,11 +182,12 @@ class Server (object) :
 #
 
 if __name__ == "__main__" :
-    S = Server(1, 22, 'ssh', '45.77.177.76', '3@mHze=5K{1wj){}', 'root', 'Wonseok.J', 970403, 'ubuntu', 'wonseokbuntu', None, '2018-03-02', None, None)
+    S = Server(1, 22, 'ssh', '45.32.249.71', 'makeitpopwebuzzz!1', 'root', 'Wonseok.J', 1230, 'ubuntu', 'wonseokbuntu', None, '2018-03-02', None, None)
     S.DB = DB("psql", "'localhost'", "'5432'", "'testdb'", "'1234'", "'test'")
     S.DB.Connect_DB()
     S.Admin = Administrator('Wonseok', '/root/바탕화면/ServerPlayer/Report/', 'root', 'Admin', 'root')
-    S.local_admin = S.GetServerOwner()
+    S.GetServerOwner()
+    S.local_db = S.DB.AdminToDatabaseConnect( S.local_admin )
 
 
 #

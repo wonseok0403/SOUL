@@ -23,7 +23,30 @@ class DB(object) :
 
     def AdminToDatabaseConnect(self, Admin) :
         # This class using admin's key to get Database information, and connect it.
-        pass
+        if( self.IS_CONNECTED == False ) :
+            print("You should try connect Database first!")
+            return
+        else :
+            cur = self.conn.cursor()
+            cur.execute("SELECT * FROM db_profile WHERE owner_id = '" + str(Admin.ID) + "'")
+            owner_info = cur.fetchall()
+            owner_info = owner_info[0]
+            DB_KEY = owner_info[0]
+            HOST = owner_info[1]
+            PW = owner_info[2]
+            PORT = owner_info[4]
+            SORTS = owner_info[5]
+
+            cur.execute("SELECT * FROM database WHERE db_key = '" + str(DB_KEY) + "'")
+            db_info = cur.fetchall()
+            db_info = db_info[0]
+            USER = db_info[5]
+            NAME = db_info[4]
+            
+            TmpDB = DB(SORTS, HOST, PORT, NAME, PW, USER, DB_KEY, Admin.ID)
+            TmpDB.Connect_DB()
+            TmpDB.SERVER_KEY = Admin.ID
+
 
     def getInfo(self) :
         return ( str(self.SORTS) + " " + str(self.HOST) + " " + str(self.PORT) + " " + str(self.NAME) + \
