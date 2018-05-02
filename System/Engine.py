@@ -45,6 +45,18 @@ def SetExecuteLog(code, ErrorCode) :
     LogFile.write('Written time : ' + str(now) + ' [' + str(now - BeforeTime) + ']'+ '\n')
     BeforeTime = now
 
+def ParseSortCont_FromString(List_forParse):
+    # It only returns two data which are Sort and Content of string in listself.
+    # EX) NAME:Wonseok
+    # Sort = Name, Content = Wonseok
+    ParsedStr = List_forParse.split('=')
+    Sort = str(ParsedStr[0])
+    Content = str(ParsedStr[1]).strip()
+    return Sort, Content
+
+def InstallRequirements() :
+    os.system('pip install -r requirements.txt')
+
 
 class Engine(object) :
     # engine.py check the bash if system has enough settings.
@@ -53,11 +65,14 @@ class Engine(object) :
     # check if user install postgresql.
     # check if user is using python 2.7 or upper version ( just in 2 version )
     def __init__(self) :
+
         SetExecuteLog('Engine initialize is started', 0)
         
         self.CheckOS() # OS check!!
         self.DBCheck() # DB Check!!
         self.PythonCheck() # Python version check!!
+        clearScreen(self.OS_SORT)
+        self.isLaunchFirst()
         SetExecuteLog('OS, DB, Python check is completed', 0)
         flag = raw_input('System check complete!')
     
@@ -99,6 +114,7 @@ class Engine(object) :
             return False
 
     def launch(self) :
+
         clearScreen(self.OS_SORT)
         print('System will be loaded. Please wait!')
         self.load_SystemLoader()
@@ -123,6 +139,20 @@ class Engine(object) :
         self.KernelObj = Kernel( self.SystemLoaderObject )
         SetExecuteLog('Kernel is loaded.', None)
 
+    def isLaunchFirst(self) :
+        userConfigure = open('Configure.txt')
+        ConfigureLines = userConfigure.readlines()
+        for i in ConfigureLines :
+            Sort, Content = ParseSortCont_FromString( i )
+            if Sort == 'Execute' :
+                if Content == 'no' :
+                    InstallRequirements()
+        
+        userConfigure.close()
+
+        userConfigure = open('Configure.txt', 'w')
+        userConfigure.write('Execute=yes')
+                    
 
 '''
     Below line is for test.
