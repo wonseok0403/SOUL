@@ -18,6 +18,7 @@ import os, sys
 sys.path.insert(0, os.getcwd())
 from ObjectInfo import AdministratorClass
 from Scheduler import Scheduler
+from UserInterface import UIManager
 import fabric
 import datetime
 def Exit(code) :
@@ -71,7 +72,6 @@ class Engine(object) :
         self.CheckOS() # OS check!!
         self.DBCheck() # DB Check!!
         self.PythonCheck() # Python version check!!
-        clearScreen(self.OS_SORT)
         self.isLaunchFirst()
         SetExecuteLog('OS, DB, Python check is completed', 0)
         flag = raw_input('System check complete!')
@@ -84,11 +84,14 @@ class Engine(object) :
         print('OS check ... [OK] ')
 
     def DBCheck(self) :
+
+
         # Error code 101 = DB error.
         if( self.isPostgreInstall()  == False ) :
             print('System needs postgreSQL!')
             Exit(101)
         else :
+            os.system('./UserConfig/ex.sh')
             print('Database check ... [OK] ')
 
     def PythonCheck(self) :
@@ -114,14 +117,17 @@ class Engine(object) :
             return False
 
     def launch(self) :
-
         clearScreen(self.OS_SORT)
         print('System will be loaded. Please wait!')
         self.load_SystemLoader()
 
         print('Kernel will be loaded. Please wait!')
         self.load_Kernel()
-        L = raw_input()
+        L = raw_input('Press any key to continue....')
+
+        self.UI = UIManager.UserInterface(self)
+        while(True) :
+            key = self.UI.PrintMainMenu(len(self.KernelObj.BadServerList), len(self.KernelObj.GoodServerList))
 
     def load_SystemLoader(self) :
         self.SystemLoaderObject = SystemLoader()
@@ -159,6 +165,7 @@ class Engine(object) :
     You don't need to think of it.
 '''
 # Aprl 15
+# May 2 added UI, and some class will be added.
 if __name__ == "__main__" :
     E = Engine()
     E.launch()
