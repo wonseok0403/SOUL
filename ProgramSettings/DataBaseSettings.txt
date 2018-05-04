@@ -1,6 +1,6 @@
 SORTS=psql
-HOST='localhost'
+HOST='45.77.177.76'
 PORT='5432'
 NAME='testdb'
-PW='1234'
+PW='test'
 USER='test'
