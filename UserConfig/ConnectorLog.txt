@@ -1,0 +1,119 @@
+Code : (getServerDB) host='45.77.177.76' dbname='testdb' user='test' password='test'
+Written time : 2018-05-05 01:23:08.135219 [0:00:05.614892]
+Code : Server List : [5, 23, u'ssh', u'45.32.249.71', u'makeitpopwebuzzz!1', u'root', u'Wonseok.J', 1230, u"'Ubuntu", u'DB Server', u'', u'2018-05-04 22:33:50.239510', None, None]
+[2, 22, u'ssh', u'123', u'123', u'123', u'123', 123, u'test', u'test', u'YES', u'2018-05-04 22:33:52.538019', None, None]
+[4, 22, u'ssh', u'45.77.180.147', u'P]9p{PWKRu=+o7y]', u'root', u'Wonseok.J', 970403, u'CentOS 7 x64', u'WonseokTest2Cent', u'', u'2018-05-04 22:34:00.129097', None, None]
+[6, 23, u'ssh', u'1.201.140.106', u'Wonseok786!', u'swc', u'Wonseok.J', 1065, u'Ubuntu14', u'WonseokTest3', u'YES', u'2018-05-04 22:34:34.437791', None, None]
+[1, 22, u'ssh', u'45.77.177.76', u'3@mHze=5K{1wj){}', u'root', u'Wonseok.J', 970403, u'Ubuntu 17.10 x64', u'LocalDB', u'YES', u'2018-05-04 22:34:41.712074', None, None]
+
+Written time : 2018-05-05 01:23:17.262638 [0:00:09.127419]
+Code : (getServerDB) host='45.77.177.76' dbname='testdb' user='test' password='test'
+Written time : 2018-05-05 01:29:00.234226 [0:00:06.615115]
+Code : Server List : [2, 22, u'ssh', u'123', u'123', u'123', u'123', 123, u'test', u'test', u'YES', u'2018-05-04 22:33:52.538019', None, None]
+[4, 22, u'ssh', u'45.77.180.147', u'P]9p{PWKRu=+o7y]', u'root', u'Wonseok.J', 970403, u'CentOS 7 x64', u'WonseokTest2Cent', u'', u'2018-05-04 22:34:00.129097', None, None]
+[6, 23, u'ssh', u'1.201.140.106', u'Wonseok786!', u'swc', u'Wonseok.J', 1065, u'Ubuntu14', u'WonseokTest3', u'YES', u'2018-05-04 22:34:34.437791', None, None]
+[1, 22, u'ssh', u'45.77.177.76', u'3@mHze=5K{1wj){}', u'root', u'Wonseok.J', 970403, u'Ubuntu 17.10 x64', u'LocalDB', u'YES', u'2018-05-04 22:34:41.712074', None, None]
+[5, 23, u'ssh', u'45.32.249.71', u'makeitpopwebuzzz!1', u'root', u'Wonseok.J', 1230, u"'Ubuntu", u'DB Server', u'YES', u'2018-05-05 01:23:21.141631', None, None]
+
+Written time : 2018-05-05 01:29:08.869345 [0:00:08.635119]
+Code : (getServerDB) host='45.77.177.76' dbname='testdb' user='test' password='test'
+Written time : 2018-05-05 01:30:18.254907 [0:00:04.201496]
+Code : Server List : [4, 22, u'ssh', u'45.77.180.147', u'P]9p{PWKRu=+o7y]', u'root', u'Wonseok.J', 970403, u'CentOS 7 x64', u'WonseokTest2Cent', u'', u'2018-05-04 22:34:00.129097', None, None]
+[6, 23, u'ssh', u'1.201.140.106', u'Wonseok786!', u'swc', u'Wonseok.J', 1065, u'Ubuntu14', u'WonseokTest3', u'YES', u'2018-05-04 22:34:34.437791', None, None]
+[1, 22, u'ssh', u'45.77.177.76', u'3@mHze=5K{1wj){}', u'root', u'Wonseok.J', 970403, u'Ubuntu 17.10 x64', u'LocalDB', u'YES', u'2018-05-04 22:34:41.712074', None, None]
+[5, 23, u'ssh', u'45.32.249.71', u'makeitpopwebuzzz!1', u'root', u'Wonseok.J', 1230, u"'Ubuntu", u'DB Server', u'YES', u'2018-05-05 01:23:21.141631', None, None]
+[2, 22, u'ssh', u'123', u'123', u'123', u'123', 123, u'test', u'test', u'YES', u'2018-05-05 01:29:08.982932', None, None]
+
+Written time : 2018-05-05 01:30:27.095874 [0:00:08.840967]
+Code : 45.77.180.147 Msg : uname -a
+Linux wonseoktest2cent 3.10.0-693.11.6.el7.x86_64 #1 SMP Thu Jan 4 01:06:37 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+
+Written time : 2018-05-05 01:30:31.057481 [0:00:03.961607]
+Code : 1.201.140.106 pxssh failed on login.
+ErCode : could not set shell prompt (received: "unset PROMPT_COMMAND\r\nPS1='[PEXPECT]\\$ '\r\nset prompt='[PEXPECT]\\$ '\r\n", expected: '\\[PEXPECT\\][\\$\\#] ').
+Written time : 2018-05-05 01:31:05.852176 [0:00:34.794695]
+Code : 45.77.177.76 pxssh failed on login.
+ErCode : password refused
+Written time : 2018-05-05 01:31:11.072559 [0:00:05.220383]
+Code : 45.32.249.71 Msg : uname -a
+Linux buzzz-server 4.4.0-87-generic #110-Ubuntu SMP Tue Jul 18 12:55:35 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+
+Written time : 2018-05-05 01:31:14.813037 [0:00:03.740478]
+Code : 123 pxssh failed on login.
+ErCode : Could not establish connection to host
+Written time : 2018-05-05 01:31:19.409305 [0:00:04.596268]
+Code : (getServerDB) host='45.77.177.76' dbname='testdb' user='test' password='test'
+Written time : 2018-05-07 19:58:06.808514 [0:00:03.445290]
+Code : Server List : [4, 22, u'ssh', u'45.77.180.147', u'P]9p{PWKRu=+o7y]', u'root', u'Wonseok.J', 970403, u'CentOS 7 x64', u'WonseokTest2Cent', u'', u'2018-05-05 01:30:31.302227', None, None]
+[6, 23, u'ssh', u'1.201.140.106', u'Wonseok786!', u'swc', u'Wonseok.J', 1065, u'Ubuntu14', u'WonseokTest3', u'YES', u'2018-05-05 01:31:04.268996', None, None]
+[1, 22, u'ssh', u'45.77.177.76', u'3@mHze=5K{1wj){}', u'root', u'Wonseok.J', 970403, u'Ubuntu 17.10 x64', u'LocalDB', u'YES', u'2018-05-05 01:31:09.014719', None, None]
+[5, 23, u'ssh', u'45.32.249.71', u'makeitpopwebuzzz!1', u'root', u'Wonseok.J', 1230, u"'Ubuntu", u'DB Server', u'', u'2018-05-05 01:31:15.057283', None, None]
+[2, 22, u'ssh', u'123', u'123', u'123', u'123', 123, u'test', u'test', u'YES', u'2018-05-05 01:31:17.590448', None, None]
+
+Written time : 2018-05-07 19:58:16.246609 [0:00:09.438095]
+Code : 45.77.180.147 Msg : uname -a
+Linux wonseoktest2cent 3.10.0-693.11.6.el7.x86_64 #1 SMP Thu Jan 4 01:06:37 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+
+Written time : 2018-05-07 19:58:19.826616 [0:00:03.580007]
+Code : (getServerDB) host='45.77.177.76' dbname='testdb' user='test' password='test'
+Written time : 2018-05-07 19:58:47.636810 [0:00:03.637315]
+Code : Server List : [6, 23, u'ssh', u'1.201.140.106', u'Wonseok786!', u'swc', u'Wonseok.J', 1065, u'Ubuntu14', u'WonseokTest3', u'YES', u'2018-05-05 01:31:04.268996', None, None]
+[1, 22, u'ssh', u'45.77.177.76', u'3@mHze=5K{1wj){}', u'root', u'Wonseok.J', 970403, u'Ubuntu 17.10 x64', u'LocalDB', u'YES', u'2018-05-05 01:31:09.014719', None, None]
+[5, 23, u'ssh', u'45.32.249.71', u'makeitpopwebuzzz!1', u'root', u'Wonseok.J', 1230, u"'Ubuntu", u'DB Server', u'', u'2018-05-05 01:31:15.057283', None, None]
+[2, 22, u'ssh', u'123', u'123', u'123', u'123', 123, u'test', u'test', u'YES', u'2018-05-05 01:31:17.590448', None, None]
+[4, 22, u'ssh', u'45.77.180.147', u'P]9p{PWKRu=+o7y]', u'root', u'Wonseok.J', 970403, u'CentOS 7 x64', u'WonseokTest2Cent', u'', u'2018-05-07 19:58:20.066983', None, None]
+
+Written time : 2018-05-07 19:58:56.977421 [0:00:09.340611]
+Code : 1.201.140.106 pxssh failed on login.
+ErCode : could not set shell prompt (received: "unset PROMPT_COMMAND\r\nPS1='[PEXPECT]\\$ '\r\nset prompt='[PEXPECT]\\$ '\r\n", expected: '\\[PEXPECT\\][\\$\\#] ').
+Written time : 2018-05-07 19:59:32.326400 [0:00:35.348979]
+Code : 45.77.177.76 pxssh failed on login.
+ErCode : password refused
+Written time : 2018-05-07 19:59:38.133573 [0:00:05.807173]
+Code : 45.32.249.71 Msg : uname -a
+Linux buzzz-server 4.4.0-87-generic #110-Ubuntu SMP Tue Jul 18 12:55:35 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+
+Written time : 2018-05-07 19:59:42.144517 [0:00:04.010944]
+Code : 123 pxssh failed on login.
+ErCode : Could not establish connection to host
+Written time : 2018-05-07 19:59:47.253776 [0:00:05.109259]
+Code : 45.77.180.147 Msg : uname -a
+Linux wonseoktest2cent 3.10.0-693.11.6.el7.x86_64 #1 SMP Thu Jan 4 01:06:37 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+
+Written time : 2018-05-07 19:59:51.557142 [0:00:04.303366]
+Code : (getServerDB) host='45.77.177.76' dbname='testdb' user='test' password='test'
+Written time : 2018-05-07 20:20:16.090925 [0:00:04.707991]
+Code : Server List : [6, 23, u'ssh', u'1.201.140.106', u'Wonseok786!', u'swc', u'Wonseok.J', 1065, u'Ubuntu14', u'WonseokTest3', u'YES', u'2018-05-07 19:59:28.277570', None, None]
+[5, 23, u'ssh', u'45.32.249.71', u'makeitpopwebuzzz!1', u'root', u'Wonseok.J', 1230, u"'Ubuntu", u'DB Server', u'', u'2018-05-07 19:59:42.390334', None, None]
+[2, 22, u'ssh', u'123', u'123', u'123', u'123', 123, u'test', u'test', u'YES', u'2018-05-07 19:59:44.659749', None, None]
+[4, 22, u'ssh', u'45.77.180.147', u'P]9p{PWKRu=+o7y]', u'root', u'Wonseok.J', 970403, u'CentOS 7 x64', u'WonseokTest2Cent', u'', u'2018-05-07 19:59:51.793340', None, None]
+[1, 22, u'ssh', u'45.77.177.76', u'Wonseok786!', u'root', u'Wonseok.J', 970403, u'Ubuntu 17.10 x64', u'LocalDB', u'YES', u'2018-05-07 19:59:35.681739', None, None]
+
+Written time : 2018-05-07 20:20:24.455290 [0:00:08.364365]
+Code : (getServerDB) host='45.77.177.76' dbname='testdb' user='test' password='test'
+Written time : 2018-05-07 20:44:39.558435 [0:00:06.011401]
+Code : Server List : [5, 23, u'ssh', u'45.32.249.71', u'makeitpopwebuzzz!1', u'root', u'Wonseok.J', 1230, u"'Ubuntu", u'DB Server', u'', u'2018-05-07 19:59:42.390334', None, None]
+[2, 22, u'ssh', u'123', u'123', u'123', u'123', 123, u'test', u'test', u'YES', u'2018-05-07 19:59:44.659749', None, None]
+[4, 22, u'ssh', u'45.77.180.147', u'P]9p{PWKRu=+o7y]', u'root', u'Wonseok.J', 970403, u'CentOS 7 x64', u'WonseokTest2Cent', u'', u'2018-05-07 19:59:51.793340', None, None]
+[1, 22, u'ssh', u'45.77.177.76', u'Wonseok786!', u'root', u'Wonseok.J', 970403, u'Ubuntu 17.10 x64', u'LocalDB', u'YES', u'2018-05-07 19:59:35.681739', None, None]
+[6, 23, u'ssh', u'1.201.140.106', u'Wonseok786!', u'swc', u'Wonseok.J', 1065, u'Ubuntu14', u'WonseokTest3', u'YES', u'2018-05-07 20:20:55.751440', None, None]
+
+Written time : 2018-05-07 20:44:47.681927 [0:00:08.123492]
+Code : 45.32.249.71 Msg : uname -a
+Linux buzzz-server 4.4.0-87-generic #110-Ubuntu SMP Tue Jul 18 12:55:35 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+
+Written time : 2018-05-07 20:44:52.437016 [0:00:04.755089]
+Code : 123 pxssh failed on login.
+ErCode : Could not establish connection to host
+Written time : 2018-05-07 20:44:57.908764 [0:00:05.471748]
+Code : 45.77.180.147 Msg : uname -a
+Linux wonseoktest2cent 3.10.0-693.11.6.el7.x86_64 #1 SMP Thu Jan 4 01:06:37 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+
+Written time : 2018-05-07 20:45:02.041963 [0:00:04.133199]
+Code : 45.77.177.76 Msg : uname -a
+Linux WonseokTest1 4.13.0-25-generic #29-Ubuntu SMP Mon Jan 8 21:14:41 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+
+Written time : 2018-05-07 20:45:08.703234 [0:00:06.661271]
+Code : 1.201.140.106 pxssh failed on login.
+ErCode : could not set shell prompt (received: "unset PROMPT_COMMAND\r\nPS1='[PEXPECT]\\$ '\r\nset prompt='[PEXPECT]\\$ '\r\n", expected: '\\[PEXPECT\\][\\$\\#] ').
+Written time : 2018-05-07 20:45:48.593543 [0:00:39.890309]

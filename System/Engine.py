@@ -111,6 +111,7 @@ class Engine(object) :
 
     def isPostgreInstall(self) :
         print('CHECK IF SYSTEM HAS POSTGRES VERSION ................. ')
+        # This directory is must be needed.
         if( os.path.exists("/var/lib/postgresql/") ) :
             return True
         else :

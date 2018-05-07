@@ -1,1 +1,1 @@
-Execute=no
+Execute=yes

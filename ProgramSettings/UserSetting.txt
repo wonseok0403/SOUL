@@ -2,4 +2,4 @@ ID=root
 PW=root
 MODE=Admin
 NAME=Wonseok
-PATH=/root/바탕화면/ServerPlayer/Report/
+PATH=/home/wonseok/바탕화면/Soul
