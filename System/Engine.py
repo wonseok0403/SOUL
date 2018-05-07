@@ -21,6 +21,8 @@ from Scheduler import Scheduler
 from UserInterface import UIManager
 import fabric
 import datetime
+from anytree import Node, RenderTree
+
 def Exit(code) :
     # code 100 : OS Error. Your os is not supported in this system.
     print("WARNNING : You can't execute program. \n Error code : " + str(code))
@@ -118,6 +120,13 @@ class Engine(object) :
             return False
 
     def launch(self) :
+        '''
+        ! - ATTENTION ALL PROGRAMMERS - #!
+
+        This is the main loop function in this program.
+        As you know, this is the main function as 'void main' in C/C++ function.
+        If you want to check some logis or things, just edit here.
+        '''
         clearScreen(self.OS_SORT)
         print('System will be loaded. Please wait!')
         self.load_SystemLoader()
@@ -126,9 +135,8 @@ class Engine(object) :
         self.load_Kernel()
         L = raw_input('Press any key to continue....')
 
-        self.UI = UIManager.UserInterface(self)
-        while(True) :
-            key = self.UI.PrintMainMenu(len(self.KernelObj.BadServerList), len(self.KernelObj.GoodServerList))
+        # if you want to check logic of UI, check below function.
+        self.UIManage()
 
     def load_SystemLoader(self) :
         self.SystemLoaderObject = SystemLoader()
@@ -159,7 +167,137 @@ class Engine(object) :
 
         userConfigure = open('Configure.txt', 'w')
         userConfigure.write('Execute=yes')
+
+    def UIManage(self) :
+        # After this line, User interface starts!
+        # Tree must be needed.   < AnyTree >
+        '''
+    @ Recent 2018 05 07  23:51   Wonseok
+    [Null]
+    |----[UserInterface]
+         |------[PrintServerManageMenu]
+         |      |------[Target Manage]
+         |      |      |-------[Target Manage Menu]
+         |      |              |--------[AddtargetMenu]
+         |      |              |--------[DeltargetMenu]
+         |      |------[Install database]
+         |      |------[Go Backup Console]
+         |      |------[Firewall manage]
+         |
+         |------[DatabaseManage]
+         |------[Configuration Mode]
+         |------[Security Mode]
+         |------[Power Off]
+
+         '''
+     
+        self.UI = UIManager.UserInterface(self)
+        currentNode=[]
+        currentNode.append(self.UI.nodUI)
+        targets = [[]]
+        while True :
+            print( currentNode[0]) 
+            if currentNode[0].name == "Null" :
+                break
+            else :
+                if currentNode[0].name == "UserInterface" :
+                    self.UI.PrintMainMenu(len(self.KernelObj.BadServerList), len(self.KernelObj.GoodServerList), currentNode)
+                    continue
+
+                elif currentNode[0].name == "PrintServerManageMenu" :
+                    self.UI.PrintServerManageMenu(targets, currentNode)
+
+                    continue
+
+                elif currentNode[0].name == "DatabaseManage":
+                    # Not developed yet
+                    pass
+                elif currentNode[0].name == "Configuration Mode":
+                    # Not developed yet
+                    pass
+                elif currentNode[0].name == "Security Mode":
+                    # not developed yet
+                    pass
+                elif currentNode[0].name == "Power Off" :
+                    print("Good bye my kkammi ................ ")
                     
+                elif currentNode[0].name == "Target Manage" :
+                    self.UI.PrintAllTargetsDetails(targets, self.KernelObj.BadServerList, self.KernelObj.GoodServerList, currentNode)
+                    continue
+
+                elif currentNode[0].name == "Install database" :
+                    # not developed yet
+                    pass
+
+                elif currentNode[0].name == "Go Backusp Console" :
+                    # not developed yet
+                    pass
+
+                elif currentNode[0].name == "Firewall manage" :
+                    # not developed yet
+                    pass
+
+                elif currentNode[0].name == "Target Manage Menu" :
+                    self.UI.TargetManageMenu(targets, currentNode)
+                    continue
+                    
+                elif currentNode[0].name == "AddtargetMenu" :
+                    self.UI.AddtargetMenu(targets, self.KernelObj.BadServerList, self.KernelObj.GoodServerList, currentNode)
+                    continue
+
+                elif currentNode[0].name == "DeltargetMenu" :
+                    self.UI.DeltargetMenu(targets, self.KernelObj.BadServerList, self.KernelObj.GoodServerList, currentNode)
+                    continue
+
+            currentNode[0] = currentNode[0].parent
+        # self.UI = UIManager.UserInterface(self)
+        # target  = [[]]
+        # level = 0
+        # while(True) :
+        #     # ? -> PrintMainMenu ( level = 0 )
+        #     key = 0
+
+        #     if( level == 0 ) :
+        #         # level = 1 and key = 1
+        #         key = self.UI.PrintMainMenu(len(self.KernelObj.BadServerList), len(self.KernelObj.GoodServerList))
+        #         level += 1
+
+        #     elif( key == 1 and level > 0) :
+        #         # PrintMainMenu -> ServerManage
+        #         clearScreen(self.OS_SORT)
+        #         num = self.UI.PrintServerManageMenu(target)
+
+        #         if( num == 1 ) :
+        #             # PrintMainMenu -> ServerManage )-> TargetManage
+        #             clearScreen(self.OS_SORT)
+        #             num = self.UI.TargetManageMenu(target)
+
+        #             if( num == 1 ) :
+        #                 # PrintMainMenu -> ServerManage -> TargetManage) -> Add target
+        #                 self.UI.AddtargetMenu(target, self.KernelObj.BadServerList, self.KernelObj.GoodServerList)
+        #             elif( num == 2 ) : 
+        #                 self.UI.DeltargetMenu(target, self.KernelObj.BadServerList, self.KernelObj.GoodServerList)
+
+
+        #         elif( num == 2 ) :
+
+        #         elif( num == 3 ) :
+                
+        #         elif( num == 4 ) :
+
+        #     elif( key == 2 or level > 0 ) :
+        #         # PrintMainMenu -> Database manage
+        #         clearScreen(self.OS_SORT)
+        #     elif( key == 3 or level ) :
+        #         # PrintMainMenu -> Configuration mode
+        #         clearScreen(self.OS_SORT)
+        #     elif( key == 4 ) :
+        #         # PrintMainMenu -> Seuciry mode
+        #         clearScreen(self.OS_SORT)
+        #     elif ( key == 0 ) :
+        #         # PrintMainMenu -> Power off
+        #         clearScreen(self.OS_SORT)
+        #         print("Good bye kkami ...")
 
 '''
     Below line is for test.
@@ -170,3 +308,5 @@ class Engine(object) :
 if __name__ == "__main__" :
     E = Engine()
     E.launch()
+
+

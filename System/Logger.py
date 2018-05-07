@@ -57,6 +57,7 @@ def SetExecuteLog(code, ErrorCode) :
     BeforeTime = now
 
 class Logger(object) :
+    
     # If you want just define logger,
     def MakeReport(self, ReportType, Path, Name, Content) :
         # push_log( self, request_key, server_key, ReportKey, origin_key, status_key, return_val, program_key )
