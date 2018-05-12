@@ -25,7 +25,10 @@ def FireForGit() :
     UserConfigFire()
     ReportFire()
     srcFire()
+    MakeRequirements()
 
+def MakeRequirements() :
+    os.system('pipreqs . --force')
 
 # If you want to share your project to git, 
 # just execute it!

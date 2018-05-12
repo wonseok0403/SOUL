@@ -50,11 +50,62 @@ class UserInterface(object) :
         # level = 4, TMM
         self.TMM = Node("Target Manage Menu", parent=self.TargetManage)
             
-        # level = 5, AM, DM
+        # level = 5, AM, DM, SystemUpdate, ThrowMessage
         self.AM = Node("AddtargetMenu", parent=self.TMM)
         self.DM = Node("DeltargetMenu", parent=self.TMM)
+        self.SystemUpdate = Node("System Update", parent = self.TMM)
+        self.ThrowMsg = Node("Throw message", parent=self.TMM)
+        
+        # level = 6, OSUpgrade, Cron update
+        self.OSUpgrade = Node("Operating System Upgrade", parent=self.SystemUpdate)
+        self.UpdateUpgrade = Node("Update & Upgrade", parent=self.SystemUpdate)
+        self.CronUpdate = Node("Cron update", parent=self.SystemUpdate)
 
         
+    def SystemUpdateMenu(self,target, nod) :
+        self.PrintTargetMenu(target)
+
+        print('')
+        print( '1 - 1. Operating System Upgrade')
+        print( '1 - 2. Update & Upgrade')
+        print( '1 - 3. update at cron ')
+        print(' 1 - 0. return to menu ')
+
+        usr_input = self.InputByUsr( 'Which one do you want to go?', 3 )
+        if( usr_input == 1 ) :
+            nod[0] = self.OSUpgrade
+        elif( usr_input == 2 ) :
+            nod[0] = self.UpdateUpgrade
+        elif( usr_input == 3 ) :
+            nod[0] = self.CronUpdate
+        elif( usr_input == 0 ) :
+            nod[0] = nod[0].parent
+
+        raw_input('')
+
+    def OperatingSystemUpgrade(self, target=[[]], nod=None ) :
+        self.PrintTargetMenu(target)
+        ''' 
+            You can add more OS in here 
+        '''
+        OSList = {}
+        OSList['ubuntu'] = []
+        OSList['cent'] = []
+        OSList['debian'] = []
+        for i in target :
+            if( i == [] ) :
+                print("You must regist target in befre menu.")
+                raw_input('')
+            else :
+                if( str(i[8]).find('Ubuntu') != -1 ) :
+                    OSList['ubuntu'].append(i)
+                elif( str(i[8]).find('Cent') != -1 ) :
+                    OSList['cent'].append(i)
+        print(OSList)
+        raw_input()
+
+        return OSList
+
 
     def InputByUsr(self, msg='', numMax=None) :
         
@@ -63,7 +114,7 @@ class UserInterface(object) :
 
         while( True ) :
             usr_input = int( raw_input('What do you want to do? : '))
-            if( usr_input <= 0 or usr_input > numMax ) :
+            if( usr_input < 0 or usr_input > numMax ) :
             # Zero always be 'power off'
                 print('Input Error, try again!')
                 flag = raw_input(msg)
@@ -142,11 +193,20 @@ class UserInterface(object) :
 
         print( '1-1 - 1. Add target.')
         print( '1-1 - 2. Del target.')
-        key =  self.InputByUsr('Which one do you want to go?', 2)
+        print( '1-1 - 3. System Update Menu')
+        print(' 1-1 - 4. Throw Messages')
+        print( '1-1 - 0. Return.')
+        key =  self.InputByUsr('Which one do you want to go?', 4)
         if( key == 1 ) :
             nod[0] = self.AM
         elif key == 2 :
             nod[0] = self.DM
+        elif key == 3 :
+            nod[0] = self.SystemUpdate
+        elif key == 4 :
+            nod[0] = self.ThrowMsg
+        elif key == 0 :
+            nod[0] = self.ServerMenu
         else :
             print('Input error!')
             raw_input()
@@ -155,23 +215,26 @@ class UserInterface(object) :
     def PrintAllTargetsDetails(self, targets=[[]], badTargets=[[]], goodTargets=[[]] ,nod=None):
         # Target list is chosen list user picked, and allTargets list is a list of all servers.
         # [ID], [PORT], [SORT], [IP], [PASSWORD]. [USRNAME], [OWNR NAME], [ OWNR_ID ], [SERVER OS], [SERVER NAME], [IS ERROR], [LAST_LOGIN], [dbkey], [obj key]
-        print("[ADDED]  [ER] [ID]     [SERVER NAME]      [IP]            [SSH ID]    [SSH PW]            [LAST LOGIN]")
         print("CONNECTION STATUS : BAD ")
+        print("[ADDED]\t\t[ER]\t[ID]\t\t[SERVER NAME]\t\t\t\t[IP]\t\t\t\t[SSH ID]\t\t[SSH PW]\t\t\t[LAST LOGIN]")
         for badtarget in badTargets :
-            print("{}       {}   {}       {}                 {}              {}          {}                  {}".format(str(badtarget in targets), str(badtarget[10]), str(badtarget[0]), str(badtarget[9]), str(badtarget[3]), str(badtarget[7]),str(badtarget[4]), str(badtarget[11])))
+            if badtarget == [] : break
+            print("{}\t\t{}\t{}\t\t{}\t\t\t\t{}\t\t\t\t{}\t\t{}\t\t\t{}".format(str(badtarget in targets), str(badtarget[10]), str(badtarget[0]), str(badtarget[9]), str(badtarget[3]), str(badtarget[7]),str(badtarget[4]), str(badtarget[11])))
         print("")
         print("[ADDED]  CONNECTION STATUS : GOOD")
         for badtarget in goodTargets :    # Yes I know. badtarget must be good target. but... I'm lazy... so.. I won't change it. badtarget is good target.. you know...        
-            print("{}       {}   {}       {}                 {}              {}          {}                  {}".format(str(badtarget in targets), str(badtarget[10]), str(badtarget[0]), str(badtarget[9]), str(badtarget[3]), str(badtarget[7]),str(badtarget[4]), str(badtarget[11])))
-        
+            if badtarget == [] : break
+            print("{}\t\t{}\t{}\t\t{}\t\t\t\t{}\t\t\t\t{}\t\t{}\t\t\t{}".format(str(badtarget in targets), str(badtarget[10]), str(badtarget[0]), str(badtarget[9]), str(badtarget[3]), str(badtarget[7]),str(badtarget[4]), str(badtarget[11])))
+
         print("\n\n")
         print("Already Targets : ")
         print("[ID]     [SERVERNAME]        [IP]        [SORT]")
         for target in targets :
+            if target == [] : break
             print("{}       {}                  {}          {}".format(str(target[0]), str(target[9]), str(target[3]), str(target[2])))
-        
-        raw_input()
+
         nod[0] = self.TMM
+        raw_input('')
 
     def ChkValue(self, id, target, bad, good) :
         '''
@@ -183,17 +246,23 @@ class UserInterface(object) :
         # target, bad, good = [ [] ] is list in list.
         # check is in target.
         for i in target :
-            if( id == i[0] ) :
-                return 1, None
+            if i == [] : break
+            #print(id,type(id), i[0], type(i[0]))
+            if( str(id) == str(i[0]) ) :
+                return 1, i
         
         # check is in bad
         for i in bad :
-            if( id == i[0] ) :
+            #print(id,type(id), i[0], type(i[0]))
+            if i == [] : break
+            if( str(id) == str(i[0]) ) :
                 return 2, i
         
         # check is in good
         for i in good :
-            if( id == i[0] ) :
+            #print(id,type(id), i[0], type(i[0]))
+            if i == [] : break
+            if( str(id) == str(i[0]) ) :
                 return 3, i
         
         return 4, 'That is not in both bad and good lists.'
@@ -201,11 +270,12 @@ class UserInterface(object) :
 
 
     def AddtargetMenu(self, target=[[]], badTargets = [[]], goodTargets = [[]], nod=None) :
-        self.PrintAllTargetsDetails(target, badTargets, goodTargets)
+        self.PrintAllTargetsDetails(target, badTargets, goodTargets,nod)
         print("\n")
         want_id = self.InputByUsr('Which one do you want to add? input [ID] value : ', None)
         num, msg = self.ChkValue(want_id, target, badTargets, goodTargets)
         if( num == 2 or num == 3 ) :
+            if( target.count([]) != 0 ) : target.remove([])
             target.append( msg )
             nod[0] = nod[0].parent
         else :
@@ -217,13 +287,13 @@ class UserInterface(object) :
         
 
         
-    def DeltargetMenu(self, target=[], badTargets = [[]], goodTargets = [[]], nod=None) :
-        self.PrintAllTargetsDetails(target, badTargets, goodTargets)
+    def DeltargetMenu(self, target=[[]], badTargets = [[]], goodTargets = [[]], nod=None) :
+        self.PrintAllTargetsDetails(target, badTargets, goodTargets,nod)
         print("\n")
         want_id = self.InputByUsr('Which one do you want to delete? input [ID] value : ', None)
         num, msg = self.ChkValue(want_id, target, badTargets, goodTargets)
-        if( num == 2 or num == 3 ) :
-            target.append( msg )
+        if( num == 1 ) :
+            target.remove( msg )
             nod[0] = nod[0].parent
         else :
             print("Caution! Error occured!")

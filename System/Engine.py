@@ -168,18 +168,45 @@ class Engine(object) :
         userConfigure = open('Configure.txt', 'w')
         userConfigure.write('Execute=yes')
 
+    def UpgradeOS(self, OSList) :
+        # Now, only supports ubuntu and cent
+        UbuntuServers = []
+        CentServers = []
+        for i in OSList['ubuntu'] :
+            UbuntuServers.append( self.KernelObj.serverToServer(i) )
+
+        for i in OSList['cent'] :
+            CentServers.append( self.KernelObj.serverToServer(i) )
+
+        # Ubuntu server upgrade
+        for i in UbuntuServers :
+            print(i, type(i))
+            i.ThrowCommand('apt-get -y install update-manager-core')
+            i.ThrowCommand('do-release-upgrade')
+
+        # CentOS server upgrade
+        for i in CentServers :
+            i.ThrowCommand("su -c 'yum update")
+
+        tmp = raw_input('Upgrade Done!')
+
     def UIManage(self) :
         # After this line, User interface starts!
         # Tree must be needed.   < AnyTree >
         '''
     @ Recent 2018 05 07  23:51   Wonseok
     [Null]
-    |----[UserInterface]
-         |------[PrintServerManageMenu]
-         |      |------[Target Manage]
-         |      |      |-------[Target Manage Menu]
-         |      |              |--------[AddtargetMenu]
-         |      |              |--------[DeltargetMenu]
+    |----[UserInterface] o
+         |------[PrintServerManageMenu] o
+         |      |------[Target Manage] o
+         |      |      |-------[Target Manage Menu] o
+         |      |              |--------[AddtargetMenu] o
+         |      |              |--------[DeltargetMenu] o
+         |      |              |--------[System UpdateMenu]
+         |      |              |        |----------------[Operating System Upgrade ]
+         |      |              |        |----------------[Update & Upgrade ]
+         |      |              |        |----------------[ update at cron ]
+         |      |              |--------[Throw message]
          |      |------[Install database]
          |      |------[Go Backup Console]
          |      |------[Firewall manage]
@@ -206,7 +233,6 @@ class Engine(object) :
 
                 elif currentNode[0].name == "PrintServerManageMenu" :
                     self.UI.PrintServerManageMenu(targets, currentNode)
-
                     continue
 
                 elif currentNode[0].name == "DatabaseManage":
@@ -248,6 +274,14 @@ class Engine(object) :
                 elif currentNode[0].name == "DeltargetMenu" :
                     self.UI.DeltargetMenu(targets, self.KernelObj.BadServerList, self.KernelObj.GoodServerList, currentNode)
                     continue
+
+                elif currentNode[0].name == "System Update" :
+                    self.UI.SystemUpdateMenu(targets, currentNode)
+                    continue
+                
+                elif currentNode[0].name == "Operating System Upgrade" :
+                    OSList = self.UI.OperatingSystemUpgrade(targets, currentNode)
+                    self.UpgradeOS(OSList)
 
             currentNode[0] = currentNode[0].parent
         # self.UI = UIManager.UserInterface(self)
