@@ -11,7 +11,8 @@ import os, sys
 #               You don't need to be worried by designing UI.
 
 from anytree import Node, RenderTree
-
+sys.path.insert( 0, os.getcwd() )
+from System import FileToServer
 class UserInterface(object) :
 
 
@@ -60,7 +61,8 @@ class UserInterface(object) :
         self.OSUpgrade = Node("Operating System Upgrade", parent=self.SystemUpdate)
         self.UpdateUpgrade = Node("Update & Upgrade", parent=self.SystemUpdate)
         self.CronUpdate = Node("Cron update", parent=self.SystemUpdate)
-
+        self.ThrowFile = Node("Throw File", parent=self.ThrowMsg)
+        self.ThrowCommand = Node("Throw Command", parent=self.ThrowMsg)
         
     def SystemUpdateMenu(self,target, nod) :
         self.PrintTargetMenu(target)
@@ -301,3 +303,16 @@ class UserInterface(object) :
             print("Error msg : " + str(msg))
             print("\nReturn before menu!")
             raw_input()
+
+    def ThrowMsgMenu(self,  nod=None) :
+        print( '1-1-3 - 1. Throw file')
+        print( '1-1-3 - 2. Throw Command')
+        key =  self.InputByUsr('Which one do you want to go?', 2)
+        if( key == 1 ) :
+            nod[0] = self.ThrowFile
+        elif key == 2 :
+            nod[0] = self.ThrowCommand
+
+
+    def ThrowFileMenu(self, target=[[]] ) :
+        pass
