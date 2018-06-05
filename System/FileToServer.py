@@ -32,14 +32,20 @@ class SCPCommand(object) :
                 self.ToDir == None  ) :
             return False
         else :
-            tmpStr = "scp " + str(self.FromDir) + " " + self.connectId + "@" + \
+            tmpStr = " scp -o StrictHostKeyChecking=no " + str(self.FromDir) + " " + self.connectId + "@" + \
                         str(self.IP) + ":" + str(self.ToDir)
             return tmpStr
 
+    def __str__(self) :
+        return self.MakeCommand()
+
 class SCPManager(object) :
-    def __init__(self, MasterServer) :
-        self.Master = MasterServer
+    def __init__(self) :
         self.Slaves = {}
+
+    def PrintTargetCommands(self) : 
+        for i in (self.Slaves.keys()) :
+            print("{}\t\t{}".format(str(i.ID), str(self.Slaves[i].MakeCommand())))
 
     def TryAddSlave(self,SlaveServer) :
         if( SlaveServer.IS_ERROR == "YES" ) :
@@ -49,18 +55,37 @@ class SCPManager(object) :
         return True
 
     def TargetSetById(self, id) :
-        _id = int(input("Input you want to set : "))
-        for Serv in self.Slaves :
-            if( Serv.ID == id ) :
-                _fromDir = str(input("From Dir (+FileName) : "))
-                _TryConID = Serv.CONECTION_USERNAME
+        SlaveList = self.Slaves.keys()
+        for Serv in SlaveList :
+            print(type(Serv), Serv.getInfo())
+            if( id == 'all') :
+                _fromDir = str(raw_input("From Dir (+FileName) : "))
+                _TryConID = Serv.CONNECTION_USERNAME
                 _IP = Serv.CONNECTION_IPADDRESS
-                _toDir = str(input("Where to go? (+FileName) : "))
+                _toDir = str(raw_input("Where to go? (+FileName) : "))
                 Command = SCPCommand(_fromDir, _TryConID, _IP, _toDir)
                 self.Slaves[Serv] = Command
+
+            if( Serv.ID == id ) :
+                _fromDir = str(raw_input("From Dir (+FileName) : "))
+                _TryConID = Serv.CONNECTION_USERNAME
+                _IP = Serv.CONNECTION_IPADDRESS
+                _toDir = str(raw_input("Where to go? (+FileName) : "))
+                Command = SCPCommand(_fromDir, _TryConID, _IP, _toDir)
+                self.Slaves[Serv] = Command
+
+    def SetCommandForAllTargets(self, Comm) :
+        for Serv in self.Slaves :
+            self.Slaves[Serv] = Comm
 
     def SendToAllTargets(self) :
         for Serv in self.Slaves :
             Comm = self.Slaves[Serv].MakeCommand()
             if( Comm == False ) : continue
-            Serv.ThrowCommand( self.Slaves[Serv].MakeCommand() )
+            print(Serv.CONNECTION_PASSWORD)
+            os.system( "sshpass -p" + Serv.CONNECTION_PASSWORD  + self.Slaves[Serv].MakeCommand() )
+            print('done!')
+            raw_input()
+
+    def DeleteServerInTargets(self, ServerKey) :
+        self.Slaves.pop(ServerKey)

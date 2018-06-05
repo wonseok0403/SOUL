@@ -13,6 +13,9 @@ import os, sys
 from anytree import Node, RenderTree
 sys.path.insert( 0, os.getcwd() )
 from System import FileToServer
+from ObjectInfo import Server
+from ObjectInfo import DatabaseClass
+from System import Kernel
 class UserInterface(object) :
 
 
@@ -22,7 +25,9 @@ class UserInterface(object) :
 
     def __init__(self, objects ) :
         # I want to make this class in GUI mode, but I don't have enough time and work force.
+        self.SCPManager = FileToServer.SCPManager()
         self.MODE = 'CUI'
+        self.Engine = objects
         if( objects.OS_SORT == 1 ) : # 1 is Linux
             self.cls = 'clear'
         elif( objects.OS_SORT == 2 ) :   # Windows
@@ -55,15 +60,19 @@ class UserInterface(object) :
         self.AM = Node("AddtargetMenu", parent=self.TMM)
         self.DM = Node("DeltargetMenu", parent=self.TMM)
         self.SystemUpdate = Node("System Update", parent = self.TMM)
-        self.ThrowMsg = Node("Throw message", parent=self.TMM)
+        self.ThrowCommandMenu = Node("Throw command menu", parent=self.TMM)
         
         # level = 6, OSUpgrade, Cron update
         self.OSUpgrade = Node("Operating System Upgrade", parent=self.SystemUpdate)
         self.UpdateUpgrade = Node("Update & Upgrade", parent=self.SystemUpdate)
         self.CronUpdate = Node("Cron update", parent=self.SystemUpdate)
-        self.ThrowFile = Node("Throw File", parent=self.ThrowMsg)
-        self.ThrowCommand = Node("Throw Command", parent=self.ThrowMsg)
+        self.ThrowFile = Node("Throw File", parent=self.ThrowCommandMenu)
+        self.ThrowMsg = Node("Throw Command", parent=self.ThrowCommandMenu)
         
+        # level = 7
+        self.SetCommandForFile = Node("Set the command for file", parent = self.ThrowFile)
+        self.SendCommand = Node("Send command", parent= self.ThrowFile)
+
     def SystemUpdateMenu(self,target, nod) :
         self.PrintTargetMenu(target)
 
@@ -115,7 +124,7 @@ class UserInterface(object) :
             return raw_input(msg)
 
         while( True ) :
-            usr_input = int( raw_input('What do you want to do? : '))
+            usr_input = int( input('What do you want to do? : '))
             if( usr_input < 0 or usr_input > numMax ) :
             # Zero always be 'power off'
                 print('Input Error, try again!')
@@ -196,7 +205,7 @@ class UserInterface(object) :
         print( '1-1 - 1. Add target.')
         print( '1-1 - 2. Del target.')
         print( '1-1 - 3. System Update Menu')
-        print(' 1-1 - 4. Throw Messages')
+        print(' 1-1 - 4. Throw Command Menu')
         print( '1-1 - 0. Return.')
         key =  self.InputByUsr('Which one do you want to go?', 4)
         if( key == 1 ) :
@@ -206,7 +215,7 @@ class UserInterface(object) :
         elif key == 3 :
             nod[0] = self.SystemUpdate
         elif key == 4 :
-            nod[0] = self.ThrowMsg
+            nod[0] = self.ThrowCommandMenu
         elif key == 0 :
             nod[0] = self.ServerMenu
         else :
@@ -304,15 +313,101 @@ class UserInterface(object) :
             print("\nReturn before menu!")
             raw_input()
 
-    def ThrowMsgMenu(self,  nod=None) :
-        print( '1-1-3 - 1. Throw file')
-        print( '1-1-3 - 2. Throw Command')
+    def func_ThrowCommandMenu(self,  nod=None) :
+        self.clear()
+        print( '1-1-4 - 1. Throw file')
+        print( '1-1-4 - 2. Throw Command')
         key =  self.InputByUsr('Which one do you want to go?', 2)
         if( key == 1 ) :
             nod[0] = self.ThrowFile
         elif key == 2 :
-            nod[0] = self.ThrowCommand
+            nod[0] = self.SendCommand
+        else :
+            nod[0] = nod[0].parent
+            print('Input error!')
+            raw_input()
 
+    def getServerFromTarget(self, target=[], nod=None) :
+        return self.Engine.KernelObj.serverToServer(target)
 
-    def ThrowFileMenu(self, target=[[]] ) :
-        pass
+    # Return Server class by server's ID.
+    def getServerFromTargetsById(self, id, target=[[]]):
+        # Target list is chosen list user picked, and allTargets list is a list of all servers.
+        # [ID], [PORT], [SORT], [IP], [PASSWORD]. [USRNAME], [OWNR NAME], [ OWNR_ID ], [SERVER OS], [SERVER NAME], [IS ERROR], [LAST_LOGIN], [dbkey], [obj key]
+        for Serv in target :
+            if Serv[0] == id :
+                return self.Engine.KernelObj.serverToServer(Serv)
+        return None
+        
+    def func_ThrowFilescp(self, nod=None) :
+        self.clear()
+        print('1..- 1. Set the command for file')
+        print('2..- 2. Send command')
+        key =  self.InputByUsr('Which one do you want to go?', 2)
+        if( key == 1 ) :
+            nod[0] = self.SetCommandForFile
+        elif key == 2 :
+            nod[0] = self.SendCommand
+        else :
+            print("Input error!")
+            raw_input()
+
+    # This function is linked with 'FILE TO SERVER.py'
+    def func_SetCommandForFile(self,  target=[[]],nod=None ) :
+        self.clear()
+        print('   ! Caution! ' )
+        print('     - your command is will be sent for your targets. ')
+        print('     - even if you want to back, system can not be back. ')
+        
+        # Sync target with SCPManager.Target
+        for i in target :
+            self.SCPManager.TryAddSlave(self.getServerFromTarget(i))
+
+        Flag = str(raw_input(' Do you want to have specific target? (y/n) '))
+        if( Flag == 'n' or Flag == 'N') :
+            self.SCPManager.TargetSetById( 'all' )
+        else :
+            print('If you want to end or exit, input -1')
+            tmpServIds = []
+            while( True ) :
+                tmpServIds.append(int( input('ID -> ')))
+                if( tmpServIds[ int(len(tmpServIds)) - 1] == -1) : # The last of tmpServIds
+                    tmpServIds.pop()
+                    break;
+            for i in tmpServIds :
+                tmpServer = self.getServerFromTargetsById(i)
+                if( tmpServer == None ) :
+                    print("Error occurs at 'UIManager.py[func_setCommandForFile]'")
+                self.SCPManager.TargetSetById( tmpServer )
+    
+    def func_SendCommand(self, nod=None) :
+        '''
+        [ID]    [COMMAND]
+        1       asf
+        2       12
+        3       ads
+        4       asd
+
+        Are you sure? or Delete? ( sure = 1, delete = 2)
+        '''
+        print('[ID]     [COMMAND]')
+        self.SCPManager.PrintTargetCommands()
+        print('')
+        flag = int(input('Are you sure? or Delete? ( sure = 1, delete = 2 )'))
+        if( flag == 1 ) :
+            self.SCPManager.SendToAllTargets()
+        else : 
+            print('Input ids you want to delete.')
+            print('If you want to end or exit, input -1')
+            tmpServIds = []
+            while( True ) :
+                tmpServIds.append(int( input('ID -> ')))
+                if( tmpServIds[ int(len(tmpServIds)) - 1] == -1) : # The last of tmpServIds
+                    tmpServIds.pop()
+                    break
+            for i in tmpServIds :
+                tmpServ= self.getServerFromTargetsById(i)
+                if( tmpServ == None ):
+                    print("UImanager.py[func_sendcommand] has some issue")
+                    continue
+                self.SCPManager.DeleteServerInTargets( tmpServ )

@@ -206,7 +206,11 @@ class Engine(object) :
          |      |              |        |----------------[Operating System Upgrade ]
          |      |              |        |----------------[Update & Upgrade ]
          |      |              |        |----------------[ update at cron ]
-         |      |              |--------[Throw message]
+         |      |              |--------[Throw command Menu] o
+         |      |                       |----------------[Throw File (scp)] o
+         |      |                       |                |------------------[ Set the command for file ] o
+         |      |                       |                |------------------[ Send command ] o
+         |      |                       |----------------[Throw Command]
          |      |------[Install database]
          |      |------[Go Backup Console]
          |      |------[Firewall manage]
@@ -282,6 +286,20 @@ class Engine(object) :
                 elif currentNode[0].name == "Operating System Upgrade" :
                     OSList = self.UI.OperatingSystemUpgrade(targets, currentNode)
                     self.UpgradeOS(OSList)
+                
+                elif currentNode[0].name == "Throw command menu" :
+                    self.UI.func_ThrowCommandMenu(currentNode)
+                    continue
+                
+                elif currentNode[0].name == "Throw File" :
+                    self.UI.func_ThrowFilescp(currentNode)
+                    continue
+                
+                elif currentNode[0].name == "Set the command for file" :
+                    self.UI.func_SetCommandForFile(targets, currentNode)
+                
+                elif currentNode[0].name == "Send command" :
+                    self.UI.func_SendCommand(currentNode)
 
             currentNode[0] = currentNode[0].parent
         # self.UI = UIManager.UserInterface(self)
